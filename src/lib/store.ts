@@ -15,9 +15,14 @@ type MissionRow = {
   updated_at: string;
 };
 
+function normalizeSupabaseUrl(raw?: string) {
+  if (!raw) return undefined;
+  return raw.trim().replace(/\/+$/, '').replace(/\/rest\/v1$/i, '');
+}
+
 function getSupabaseConfig() {
-  const url = process.env.SUPABASE_URL;
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const url = normalizeSupabaseUrl(process.env.SUPABASE_URL);
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
   return { url, serviceKey, enabled: Boolean(url && serviceKey) };
 }
 
