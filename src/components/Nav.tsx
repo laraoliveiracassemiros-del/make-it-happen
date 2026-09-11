@@ -12,6 +12,7 @@ export function Nav() {
         <Link href="/operator">Operators</Link>
         <Link href="/academy">Academy</Link>
         <Link href="/control-center">Control Center</Link>
+        <Link href="/setup">Setup</Link>
       </div>
       <div className="nav-actions">
         <Link className="btn-dark" href="/operator">Ser Operator</Link>
