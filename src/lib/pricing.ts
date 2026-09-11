@@ -21,9 +21,9 @@ export function createQuote(intent: IntentResult): Quote {
     etaMinutes,
     explanation:
       intent.complexity === 'premium'
-        ? 'Missão premium: exige planejamento, fornecedores e coordenação humana.'
+        ? 'Requer coordenação cuidadosa, fornecedores ou execução de alto padrão. O valor considera planejamento, responsabilidade e acompanhamento.'
         : intent.complexity === 'multi_step'
-          ? 'Missão multi-etapas: inclui tempo de execução, deslocamento e coordenação.'
-          : 'Missão simples: execução direta com Operator verificado.',
+          ? 'Inclui múltiplas etapas, deslocamento, coordenação e confirmação de conclusão com evidência.'
+          : 'Execução direta com Operator verificado, tracking e confirmação final.',
   };
 }
