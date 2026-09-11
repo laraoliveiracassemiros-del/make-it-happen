@@ -11,7 +11,7 @@ export const demoOperators: Operator[] = [
     completedMissions: 1247,
     online: true,
     city: 'Brasília',
-    skills: ['High-value handling', 'Multi-stop', 'Gift missions'],
+    skills: ['Alto valor', 'Multi-paradas', 'Missões premium'],
   },
   {
     id: 'op_pro_camila',
@@ -23,7 +23,7 @@ export const demoOperators: Operator[] = [
     completedMissions: 638,
     online: true,
     city: 'Brasília',
-    skills: ['Fast pickup', 'Returns', 'Document-safe protocol'],
+    skills: ['Retirada rápida', 'Trocas e devoluções', 'Protocolo seguro'],
   },
   {
     id: 'op_core_diego',
@@ -35,7 +35,7 @@ export const demoOperators: Operator[] = [
     completedMissions: 214,
     online: true,
     city: 'Brasília',
-    skills: ['Dense urban missions', 'Small parcels'],
+    skills: ['Regiões densas', 'Itens pequenos', 'Entrega urbana'],
   },
 ];
 
