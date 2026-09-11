@@ -8,16 +8,23 @@ export default async function MissionPage({ params }: { params: Promise<{ id: st
   return (
     <main className="shell">
       <Nav />
-      <section className="container section" style={{ borderTop: 0 }}>
-        <div className="grid two">
+      <section className="container section mission-section" style={{ borderTop: 0 }}>
+        <div className="grid two mission-grid">
           <div className="glass card" style={{ borderRadius: 38 }}>
             <div className="kicker">Mission #{id.slice(0, 8)}</div>
-            <h1 className="display" style={{ fontSize: 'clamp(58px, 8vw, 108px)', lineHeight: .9, margin: '16px 0' }}>Já estamos cuidando disso.</h1>
-            <p className="lead">Tracking demo. Com Supabase conectado, esta tela passa a ler status real da Mission.</p>
+            <h1 className="display mission-card-title">Já estamos cuidando disso.</h1>
+            <p className="lead">Acompanhe cada etapa até o estado final: Done.</p>
             <MissionTimeline active={3} />
-            <div style={{ marginTop: 24 }}><Link className="btn" href="/make">Criar outra Mission</Link></div>
+            <div className="action-footer">
+              <Link className="btn" href="/make">Criar outra Mission</Link>
+              <Link className="btn-dark" href="/control-center">Abrir Control Center</Link>
+            </div>
           </div>
-          <div className="mapfake"><span className="map-pin" style={{ left: '30%', top: '52%' }} /><span className="map-pin" style={{ left: '68%', top: '38%' }} /></div>
+          <div className="mapfake live-map">
+            <span className="map-pin" style={{ left: '30%', top: '52%' }} />
+            <span className="map-pin" style={{ left: '68%', top: '38%' }} />
+            <span className="map-pin" style={{ left: '50%', top: '65%' }} />
+          </div>
         </div>
       </section>
       <Footer />
