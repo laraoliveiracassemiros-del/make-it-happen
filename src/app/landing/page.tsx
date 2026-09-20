@@ -14,9 +14,9 @@ export default function LandingPage() {
       </nav>
 
       <section className="site-hero">
-        <div className="site-kicker">MEMBERSHIP FOR REAL LIFE</div>
+        <div className="site-kicker">YOUR OPERATING LAYER FOR REAL LIFE</div>
         <h1>More life.<br />Less friction.</h1>
-        <p>Sēn brings premium places, thoughtful AI, real-world community and visible value into one calm membership.</p>
+        <p>Sēn helps you discover, plan, book and live more of the real world. Use the app first; membership unlocks better access, economics and privileges when it becomes worth it.</p>
         <div className="site-actions">
           <Link className="site-primary" href="/founding">Join Founding 25</Link>
           <a className="site-secondary" href="#membership">See membership</a>
@@ -28,14 +28,14 @@ export default function LandingPage() {
 
       <section className="site-section" id="how">
         <div className="site-section-head">
-          <span>ONE MEMBERSHIP</span>
-          <h2>Access is only the beginning.</h2>
+          <span>ONE SYSTEM</span>
+          <h2>Membership is an upgrade, not an entrance fee.</h2>
         </div>
         <div className="site-grid four">
           <article><b>01</b><h3>Explore</h3><p>Curated premium places and experiences around your real schedule.</p></article>
           <article><b>02</b><h3>Ask Sēn</h3><p>Natural AI that plans, finds, books and explains — without hiding the rules.</p></article>
           <article><b>03</b><h3>Join people</h3><p>Circles and Squads designed to create real activity, not more screen time.</p></article>
-          <article><b>04</b><h3>See your value</h3><p>Know what you used, what you saved and what your membership is doing for you.</p></article>
+          <article><b>04</b><h3>See your value</h3><p>Know what you used, what you could save, and when a membership would actually pay off.</p></article>
         </div>
       </section>
 
