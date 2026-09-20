@@ -804,3 +804,78 @@ button:active { transform: scale(.985); }
   .founding-grid { grid-template-columns: 1fr; gap: 35px; padding-bottom: 70px; }
   .founding-hero { padding-top: 85px; }
 }
+
+/* Sēn Validation Lab */
+.validation-hero {
+  width: min(1180px, calc(100% - 44px));
+  margin: 0 auto;
+  padding: 110px 0 65px;
+}
+.validation-hero h1 {
+  max-width: 1000px;
+  font-family: Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(54px, 8vw, 108px);
+  line-height: .91;
+  letter-spacing: -.06em;
+  margin: 18px 0 24px;
+}
+.validation-hero p { max-width: 720px; color: var(--muted); font-size: 15px; line-height: 1.75; }
+.validation-shell {
+  width: min(900px, calc(100% - 44px));
+  margin: 0 auto;
+  padding: 20px 0 110px;
+}
+.track-switch {
+  display: inline-flex;
+  gap: 5px;
+  padding: 5px;
+  margin-bottom: 22px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255,250,242,.72);
+}
+.track-switch button {
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+}
+.track-switch button.active { background: var(--espresso); color: white; }
+.validation-form, .validation-done {
+  border-radius: 30px;
+  padding: clamp(24px, 5vw, 48px);
+  background: rgba(255,250,242,.92);
+  border: 1px solid var(--line);
+  box-shadow: 0 25px 75px rgba(64,45,35,.065);
+}
+.validation-intro > span, .validation-done > span {
+  font-size: 9px; font-weight: 900; letter-spacing: .16em; color: var(--olive);
+}
+.validation-intro h2, .validation-done h2 {
+  font-family: Georgia, serif; font-weight: 500; font-size: 42px; letter-spacing: -.045em; margin: 10px 0 10px;
+}
+.validation-intro p, .validation-done p { color: var(--muted); font-size: 12px; line-height: 1.65; }
+.validation-form { display: grid; gap: 17px; }
+.validation-form label {
+  display: grid; gap: 8px; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .08em; font-size: 9px; font-weight: 800;
+}
+.validation-form input, .validation-form select, .validation-form textarea {
+  width: 100%; border: 1px solid var(--line); border-radius: 15px;
+  background: var(--cream); color: var(--ink); padding: 14px;
+  outline: 0; font-size: 12px; text-transform: none; letter-spacing: 0; font-weight: 400;
+}
+.validation-form textarea { min-height: 105px; resize: vertical; }
+.research-task {
+  margin-top: 8px; padding: 18px; border-radius: 18px; background: var(--cream-2);
+}
+.research-task span, .research-task strong, .research-task a { display: block; }
+.research-task span { font-size: 8px; letter-spacing: .13em; font-weight: 900; color: var(--olive); }
+.research-task strong { margin: 8px 0 13px; font-family: Georgia, serif; font-size: 18px; font-weight: 500; }
+.research-task a { color: var(--espresso); font-size: 11px; font-weight: 800; }
+.validation-form > small { color: var(--muted); font-size: 9px; }
+.validation-done button {
+  margin-top: 18px; padding: 11px 15px; border-radius: 999px; background: var(--cream-2); color: var(--espresso);
+}
