@@ -516,6 +516,73 @@ function UpgradeView({ close }: { close: () => void }) {
   );
 }
 
+
+function Onboarding({ finish }: { finish: () => void }) {
+  const [step, setStep] = useState(0);
+  const [plan, setPlan] = useState<'Core' | 'Plus' | 'Black'>('Plus');
+  const [intent, setIntent] = useState('Feel better');
+
+  return (
+    <div className="onboarding">
+      <div className="onboarding-top">
+        <div className="brand-word large">Sēn</div>
+        <span>{step + 1} / 3</span>
+      </div>
+
+      {step === 0 && (
+        <div className="onboarding-stage">
+          <small className="eyebrow">Membership for real life</small>
+          <h1>More life.<br />Less friction.</h1>
+          <p>Move, recover, work, discover and organize your week through one calm membership.</p>
+          <div className="intent-grid">
+            {['Feel better', 'Move more', 'Try new things', 'Recover', 'Work better', 'Meet people'].map((item) => (
+              <button key={item} className={intent === item ? 'intent active' : 'intent'} onClick={() => setIntent(item)}>{item}</button>
+            ))}
+          </div>
+          <button className="primary" onClick={() => setStep(1)}>Continue</button>
+        </div>
+      )}
+
+      {step === 1 && (
+        <div className="onboarding-stage">
+          <small className="eyebrow">Your membership</small>
+          <h1>Choose how much access you want.</h1>
+          <div className="plan-stack">
+            {[
+              { name: 'Core' as const, price: 'R$ 399', note: 'A strong everyday base.' },
+              { name: 'Plus' as const, price: 'R$ 799', note: 'More studio access + privileges.' },
+              { name: 'Black' as const, price: 'R$ 1.299', note: 'Signature access + concierge.' },
+            ].map((item) => (
+              <button key={item.name} className={plan === item.name ? 'plan-card selected' : 'plan-card'} onClick={() => setPlan(item.name)}>
+                <div><strong>{item.name}</strong><span>{item.note}</span></div>
+                <b>{item.price}</b>
+              </button>
+            ))}
+          </div>
+          <button className="primary" onClick={() => setStep(2)}>Continue with {plan}</button>
+          <button className="quiet-button" onClick={() => setStep(0)}>Back</button>
+        </div>
+      )}
+
+      {step === 2 && (
+        <div className="onboarding-stage final">
+          <div className="welcome-orb">✦</div>
+          <small className="eyebrow">You’re ready</small>
+          <h1>Let Sēn work around your real life.</h1>
+          <p>Your starting intent is <b>{intent}</b> and your prototype plan is <b>{plan}</b>. Nothing here charges you.</p>
+          <div className="first-win">
+            <span>FIRST SUGGESTION</span>
+            <strong>Reformer tomorrow · 18:30</strong>
+            <em>11 min away · Included</em>
+          </div>
+          <button className="primary" onClick={finish}>Enter Sēn</button>
+          <button className="quiet-button" onClick={() => setStep(1)}>Back</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function Overlay({ children, close }: { children: React.ReactNode; close: () => void }) {
   return (
     <div className="overlay">
@@ -528,6 +595,7 @@ function Overlay({ children, close }: { children: React.ReactNode; close: () => 
 export default function HomePage() {
   const [tab, setTab] = useState<Tab>('home');
   const [view, setView] = useState<View>(null);
+  const [onboarding, setOnboarding] = useState(true);
 
   function changeTab(next: Tab) {
     setView(null);
@@ -557,6 +625,7 @@ export default function HomePage() {
         <div className="device">
           <div className="statusbar"><span>13:10</span><span>● ● ◒</span></div>
           <div className="app">
+            {onboarding && <Onboarding finish={() => setOnboarding(false)} />}
             {tab === 'home' && <Home setTab={changeTab} open={open} />}
             {tab === 'explore' && <Explore open={open} />}
             {tab === 'sen' && <SenAI open={open} />}
@@ -575,6 +644,7 @@ export default function HomePage() {
         <button onClick={() => { setTab('sen'); setView(null); }}>Talk to Sēn</button>
         <button onClick={() => { setTab('wallet'); setView(null); }}>Open a Privilege</button>
         <button onClick={() => { setTab('circles'); setView('squad'); }}>Join a Squad</button>
+        <button onClick={() => { setView(null); setTab('home'); setOnboarding(true); }}>Replay onboarding</button>
       </aside>
 
       {view === 'partner' && <PartnerView close={() => setView(null)} open={open} />}
