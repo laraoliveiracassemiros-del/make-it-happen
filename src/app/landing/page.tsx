@@ -18,7 +18,7 @@ export default function LandingPage() {
         <h1>More life.<br />Less friction.</h1>
         <p>Sēn brings premium places, thoughtful AI, real-world community and visible value into one calm membership.</p>
         <div className="site-actions">
-          <Link className="site-primary" href="/">Experience Sēn</Link>
+          <Link className="site-primary" href="/founding">Join Founding 25</Link>
           <a className="site-secondary" href="#membership">See membership</a>
         </div>
         <div className="site-orbit">
