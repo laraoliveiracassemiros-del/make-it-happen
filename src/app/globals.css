@@ -1208,3 +1208,67 @@ button:active { transform: scale(.985); }
 .earned-offer span { font-size:7px; letter-spacing:.13em; font-weight:900; color:#d6c5ad; }
 .earned-offer strong { margin:8px 0 5px; font-family:Georgia,serif; font-size:18px; font-weight:500; }
 .earned-offer em { font-size:9px; font-style:normal; color:rgba(248,239,228,.62); }
+
+/* Sēn Free + Flex Pack product states */
+.free-state-strip {
+  margin-top:10px; padding:12px 13px; border-radius:16px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  background:rgba(255,255,255,.4); border:1px solid var(--line);
+}
+.free-state-strip span,.free-state-strip strong { display:block; }
+.free-state-strip span { font-size:7px; letter-spacing:.13em; font-weight:900; color:var(--olive); }
+.free-state-strip strong { margin-top:3px; font-size:10px; }
+.free-state-strip button { background:transparent; color:var(--espresso); font-size:9px; font-weight:800; }
+.retail-compare { display:block; margin-top:4px; color:var(--muted); font-size:8px; text-decoration:line-through; }
+
+.wallet-credit-card {
+  margin-top:12px; padding:16px 17px; border-radius:20px;
+  display:flex; align-items:center; justify-content:space-between; gap:15px;
+  background:linear-gradient(145deg,rgba(255,250,242,.9),rgba(236,226,212,.86));
+  border:1px solid var(--line);
+}
+.wallet-credit-card span,.wallet-credit-card strong,.wallet-credit-card em { display:block; }
+.wallet-credit-card span { font-size:7px; letter-spacing:.13em; font-weight:900; color:var(--olive); }
+.wallet-credit-card strong { margin:5px 0 2px; font-family:Georgia,serif; font-size:25px; font-weight:500; }
+.wallet-credit-card em { font-size:8px; font-style:normal; color:var(--muted); }
+.wallet-credit-card button { padding:8px 10px; border-radius:999px; background:var(--espresso); color:white; font-size:8px; }
+
+.pack-card {
+  width:100%; margin-top:9px; padding:16px 17px; text-align:left; border-radius:20px;
+  background:rgba(255,250,242,.72); color:var(--espresso); border:1px solid var(--line);
+}
+.pack-card span,.pack-card strong,.pack-card em { display:block; }
+.pack-card span { font-size:7px; letter-spacing:.13em; font-weight:900; color:var(--olive); }
+.pack-card strong { margin:7px 0 5px; font-family:Georgia,serif; font-size:18px; font-weight:500; }
+.pack-card em { font-size:9px; font-style:normal; color:var(--muted); }
+
+.savings-meter {
+  margin-top:9px; padding:16px 17px; border-radius:20px;
+  background:rgba(255,255,255,.42); border:1px solid var(--line);
+}
+.meter-head { display:flex; align-items:center; justify-content:space-between; }
+.meter-head span { font-size:7px; letter-spacing:.13em; font-weight:900; color:var(--olive); }
+.meter-head b { font-size:9px; }
+.meter-track { height:7px; margin:12px 0 8px; border-radius:999px; overflow:hidden; background:#ddd2c5; }
+.meter-track i { display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,#a3a68c,#6f755b); }
+.savings-meter p { margin:0; color:var(--muted); font-size:9px; line-height:1.45; }
+
+.pack-stack { display:grid; gap:9px; margin:26px 0 16px; }
+.pack-option {
+  width:100%; padding:15px; border-radius:18px; display:flex; align-items:center; justify-content:space-between;
+  text-align:left; background:rgba(255,250,242,.72); color:var(--espresso); border:1px solid var(--line);
+}
+.pack-option.selected { background:var(--cream-2); border-color:rgba(64,45,35,.28); box-shadow:inset 0 0 0 1px rgba(64,45,35,.22); }
+.pack-option strong,.pack-option span,.pack-option b,.pack-option em { display:block; }
+.pack-option strong { font-size:12px; }
+.pack-option span { margin-top:5px; font-size:9px; color:var(--muted); }
+.pack-option b { text-align:right; font-size:12px; }
+.pack-option em { margin-top:5px; text-align:right; font-size:8px; font-style:normal; color:var(--olive); }
+.pack-vs-core {
+  padding:16px; border-radius:19px;
+  background:linear-gradient(145deg,rgba(64,45,35,.97),rgba(88,70,58,.96));
+  color:#f8efe4;
+}
+.pack-vs-core span { font-size:7px; letter-spacing:.13em; font-weight:900; color:#d6c5ad; }
+.pack-vs-core strong { display:block; margin:7px 0; font-family:Georgia,serif; font-size:17px; font-weight:500; }
+.pack-vs-core p { margin:0; font-size:9px; line-height:1.5; color:rgba(248,239,228,.64); }
