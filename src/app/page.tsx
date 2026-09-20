@@ -12,7 +12,9 @@ type View =
   | 'privilege'
   | 'squad'
   | 'upgrade'
-  | 'membership'\n  | 'memory';
+  | 'membership'
+  | 'memory'
+  | 'packs';
 
 type Message = { role: 'user' | 'sen'; text: string };
 
@@ -100,6 +102,13 @@ function Home({ setTab, open, hasMembership }: { setTab: (tab: Tab) => void; ope
         </div>
       </button>
 
+      {!hasMembership && (
+        <div className="free-state-strip">
+          <div><span>SĒN FREE</span><strong>Pay only when you book.</strong></div>
+          <button onClick={() => setTab('wallet')}>Wallet & packs →</button>
+        </div>
+      )}
+
       <SectionLabel>For you today</SectionLabel>
       <button className="editorial-card" onClick={() => setTab('explore')}>
         <div>
@@ -138,7 +147,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return <div className="section-label">{children}</div>;
 }
 
-function Explore({ open }: { open: (view: View) => void }) {
+function Explore({ open, hasMembership }: { open: (view: View) => void; hasMembership: boolean }) {
   const [query, setQuery] = useState('reformer amanhã depois das 18h');
   const filtered = useMemo(() => partners.filter((p) => p.name.toLowerCase().includes(query.toLowerCase().split(' ')[0]) || query.includes('reformer')), [query]);
 
@@ -164,10 +173,11 @@ function Explore({ open }: { open: (view: View) => void }) {
             <span>{index === 0 ? 'R' : 'A'}</span>
           </div>
           <div className="partner-copy">
-            <Badge>{partner.state}</Badge>
+            <Badge>{hasMembership ? partner.state : 'Sēn Price'}</Badge>
             <strong>{partner.name}</strong>
             <span>{partner.area} · {partner.distance}</span>
-            <em>{partner.times.join('   ')}{partner.price ? ` · ${partner.price}` : ''}</em>
+            <em>{partner.times.join('   ')} · {hasMembership ? (partner.price || 'Included') : (index === 0 ? 'R$ 78' : 'R$ 64')}</em>
+            {!hasMembership && <small className="retail-compare">{index === 0 ? 'Public R$ 90' : 'Public R$ 75'}</small>}
           </div>
         </button>
       ))}
@@ -314,15 +324,35 @@ function Wallet({ open, hasMembership }: { open: (view: View) => void; hasMember
 
       {!hasMembership && (
         <>
+          <div className="wallet-credit-card">
+            <div><span>SĒN WALLET</span><strong>R$ 32</strong><em>available credit</em></div>
+            <button>Use on next booking</button>
+          </div>
+
+          <button className="pack-card" onClick={() => open('packs')}>
+            <span>FLEX PACK</span>
+            <strong>Not ready for Core?</strong>
+            <em>Buy 3, 5 or 10 eligible studio passes without subscribing →</em>
+          </button>
+
+          <div className="savings-meter">
+            <div className="meter-head">
+              <span>THIS MONTH</span><b>R$ 286 spent</b>
+            </div>
+            <div className="meter-track"><i style={{width:'72%'}} /></div>
+            <p>At around 5 eligible studio visits, Core usually becomes the stronger deal.</p>
+          </div>
+
           <button className="membership-nudge" onClick={() => open('membership')}>
             <span>BASED ON YOUR USE</span>
-            <strong>Core would already make sense for you.</strong>
-            <em>See the exact benefits →</em>
+            <strong>You’re getting close to Core territory.</strong>
+            <em>See the exact comparison →</em>
           </button>
+
           <button className="earned-offer" onClick={() => open('membership')}>
             <span>YOUR CURRENT OFFER</span>
             <strong>7% off your first 3 months of Core</strong>
-            <em>Unlocked from an active-use campaign · terms visible before purchase</em>
+            <em>Active-use campaign · terms visible before purchase</em>
           </button>
         </>
       )}
@@ -339,9 +369,9 @@ function Wallet({ open, hasMembership }: { open: (view: View) => void; hasMember
 
       <SectionLabel>Recent</SectionLabel>
       <div className="transaction-list">
-        <div><span>Ativa Reformer</span><b>Included</b></div>
-        <div><span>Member Price · Tennis</span><b>R$ 34</b></div>
-        <div><span>Privilege · Recovery</span><b>R$ 0</b></div>
+        <div><span>Ativa Reformer</span><b>{hasMembership ? 'Included' : 'R$ 78'}</b></div>
+        <div><span>Tennis · Sēn Price</span><b>{hasMembership ? 'R$ 34' : 'R$ 49'}</b></div>
+        <div><span>Wallet credit earned</span><b>+R$ 12</b></div>
       </div>
 
       <button className="upgrade-card" onClick={() => open(hasMembership ? 'upgrade' : 'membership')}>
@@ -544,6 +574,44 @@ function UpgradeView({ close }: { close: () => void }) {
 
 
 
+
+function PacksView({ close }: { close: () => void }) {
+  const [selected, setSelected] = useState(5);
+  const packs = [
+    { qty: 3, price: 'R$ 219', expiry: '45 days', per: 'R$ 73 / visit' },
+    { qty: 5, price: 'R$ 349', expiry: '45 days', per: 'R$ 69,80 / visit' },
+    { qty: 10, price: 'R$ 649', expiry: '60 days', per: 'R$ 64,90 / visit' },
+  ];
+  return (
+    <Overlay close={close}>
+      <div className="overlay-body top-spaced packs-view">
+        <button className="back light" onClick={close}>←</button>
+        <small className="eyebrow">Flex Packs</small>
+        <h1>More than avulso. Less than a membership.</h1>
+        <p className="muted-line">Use eligible studio visits without a recurring subscription. Packs expire and do not include gym access or monthly Privileges.</p>
+
+        <div className="pack-stack">
+          {packs.map((p)=>(
+            <button key={p.qty} className={selected===p.qty?'pack-option selected':'pack-option'} onClick={()=>setSelected(p.qty)}>
+              <div><strong>{p.qty} Studio Passes</strong><span>{p.expiry} validity · eligible inventory</span></div>
+              <div><b>{p.price}</b><em>{p.per}</em></div>
+            </button>
+          ))}
+        </div>
+
+        <div className="pack-vs-core">
+          <span>SMART COMPARISON</span>
+          <strong>Buying packs every month? Core may already be better.</strong>
+          <p>Core adds selected gym access, eligible studio visits and a monthly Privilege on top of recurring value.</p>
+        </div>
+
+        <button className="primary">Buy {selected} passes in prototype</button>
+        <button className="quiet-button" onClick={close}>Not now</button>
+      </div>
+    </Overlay>
+  );
+}
+
 function MemoryView({ close }: { close: () => void }) {
   const [boxing, setBoxing] = useState(true);
   const [pilates, setPilates] = useState(true);
@@ -594,8 +662,8 @@ function MembershipView({ close, activate }: { close: () => void; activate: () =
         <p className="muted-line">Membership unlocks better economics, included access and premium privileges. We want you to feel the need before we ask you to subscribe.</p>
         <div className="membership-proof">
           <span>BASED ON YOUR CURRENT PICKS</span>
-          <strong>Core could save about R$ 286/month</strong>
-          <em>Prototype estimate, not a promise.</em>
+          <strong>Your current pattern: R$ 286 spent · ~4 eligible visits</strong>
+          <em>At ~5+ eligible visits/month, Core typically becomes more attractive. Prototype estimate.</em>
         </div>
         <div className="plan-stack compact-plans">
           {plans.map((item) => (
@@ -716,7 +784,7 @@ export default function HomePage() {
           <div className="app">
             {onboarding && <Onboarding finish={() => setOnboarding(false)} />}
             {tab === 'home' && <Home setTab={changeTab} open={open} hasMembership={hasMembership} />}
-            {tab === 'explore' && <Explore open={open} />}
+            {tab === 'explore' && <Explore open={open} hasMembership={hasMembership} />}
             {tab === 'sen' && <SenAI open={open} />}
             {tab === 'circles' && <Circles open={open} />}
             {tab === 'wallet' && <Wallet open={open} hasMembership={hasMembership} />}
@@ -734,6 +802,7 @@ export default function HomePage() {
         <button onClick={() => { setTab('wallet'); setView(null); }}>Open a Privilege</button>
         <button onClick={() => { setTab('circles'); setView('squad'); }}>Join a Squad</button>
         <button onClick={() => { setView(null); setTab('home'); setOnboarding(true); setHasMembership(false); }}>Replay onboarding</button>
+        <button onClick={() => setView('packs')}>Preview Flex Packs</button>
         <button onClick={() => setView('membership')}>Preview membership</button>
       </aside>
 
@@ -744,7 +813,9 @@ export default function HomePage() {
       {view === 'privilege' && <PrivilegeView close={() => setView(null)} />}
       {view === 'squad' && <SquadView close={() => setView(null)} />}
       {view === 'upgrade' && <UpgradeView close={() => setView(null)} />}
-      {view === 'membership' && <MembershipView close={() => setView(null)} activate={() => { setHasMembership(true); setView(null); setTab('wallet'); }} />}\n      {view === 'memory' && <MemoryView close={() => setView(null)} />}
+      {view === 'membership' && <MembershipView close={() => setView(null)} activate={() => { setHasMembership(true); setView(null); setTab('wallet'); }} />}
+      {view === 'memory' && <MemoryView close={() => setView(null)} />}
+      {view === 'packs' && <PacksView close={() => setView(null)} />}
     </main>
   );
 }
