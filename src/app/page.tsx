@@ -12,7 +12,7 @@ type View =
   | 'privilege'
   | 'squad'
   | 'upgrade'
-  | 'membership';
+  | 'membership'\n  | 'memory';
 
 type Message = { role: 'user' | 'sen'; text: string };
 
@@ -224,8 +224,15 @@ function SenAI({ open }: { open: (view: View) => void }) {
         <div className="chip-row">
           <button className="chip" onClick={() => setMessages((p) => [...p, { role: 'sen', text: 'Me manda sua semana do jeito que estiver na cabeça. Eu organizo antes de salvar qualquer coisa.' }])}>Plan my week</button>
           <button className="chip" onClick={quickFind}>Find something now</button>
-          <button className="chip">Use my benefits</button>
+          <button className="chip" onClick={() => open('memory')}>What Sēn remembers</button>
         </div>
+
+        <button className="proactive-card" onClick={() => open('partner')}>
+          <span>NEAR YOU · OPTIONAL</span>
+          <strong>Boxing at 16:30</strong>
+          <p>You’re around Asa Sul. This starts in 50 min and fits your usual afternoon window.</p>
+          <em>Why this suggestion →</em>
+        </button>
 
         <div className="chat">
           {messages.map((message, index) => (
@@ -306,11 +313,18 @@ function Wallet({ open, hasMembership }: { open: (view: View) => void; hasMember
       </div>
 
       {!hasMembership && (
-        <button className="membership-nudge" onClick={() => open('membership')}>
-          <span>BASED ON YOUR USE</span>
-          <strong>Core would already make sense for you.</strong>
-          <em>See the exact benefits →</em>
-        </button>
+        <>
+          <button className="membership-nudge" onClick={() => open('membership')}>
+            <span>BASED ON YOUR USE</span>
+            <strong>Core would already make sense for you.</strong>
+            <em>See the exact benefits →</em>
+          </button>
+          <button className="earned-offer" onClick={() => open('membership')}>
+            <span>YOUR CURRENT OFFER</span>
+            <strong>7% off your first 3 months of Core</strong>
+            <em>Unlocked from an active-use campaign · terms visible before purchase</em>
+          </button>
+        </>
       )}
 
       <SectionLabel>{hasMembership ? 'Your privileges' : 'Member-only preview'}</SectionLabel>
@@ -529,6 +543,41 @@ function UpgradeView({ close }: { close: () => void }) {
 
 
 
+
+function MemoryView({ close }: { close: () => void }) {
+  const [boxing, setBoxing] = useState(true);
+  const [pilates, setPilates] = useState(true);
+  const [afternoon, setAfternoon] = useState(true);
+  return (
+    <Overlay close={close}>
+      <div className="overlay-body top-spaced memory-view">
+        <button className="back light" onClick={close}>←</button>
+        <small className="eyebrow">What Sēn remembers</small>
+        <h1>Your preferences should move with you.</h1>
+        <p className="muted-line">These are editable signals — not permanent labels. Sēn uses them to improve suggestions, not to define you.</p>
+
+        <div className="memory-list">
+          <button onClick={() => setBoxing(!boxing)} className={boxing ? 'memory-row active' : 'memory-row'}>
+            <div><strong>Boxing</strong><span>Currently relevant</span></div><b>{boxing ? 'On' : 'Off'}</b>
+          </button>
+          <button onClick={() => setPilates(!pilates)} className={pilates ? 'memory-row active' : 'memory-row'}>
+            <div><strong>Pilates / Reformer</strong><span>Growing preference</span></div><b>{pilates ? 'On' : 'Off'}</b>
+          </button>
+          <button onClick={() => setAfternoon(!afternoon)} className={afternoon ? 'memory-row active' : 'memory-row'}>
+            <div><strong>Afternoon activity</strong><span>Often works for you</span></div><b>{afternoon ? 'On' : 'Off'}</b>
+          </button>
+        </div>
+
+        <div className="memory-note">
+          <span>CONTROL</span>
+          <p>You can edit, remove or reset remembered preferences. Sensitive information should never become durable memory silently.</p>
+        </div>
+        <button className="primary pale" onClick={close}>Done</button>
+      </div>
+    </Overlay>
+  );
+}
+
 function MembershipView({ close, activate }: { close: () => void; activate: () => void }) {
   const [selected, setSelected] = useState<'Core'|'Plus'|'Black'>('Core');
   const plans = [
@@ -609,8 +658,8 @@ function Onboarding({ finish }: { finish: () => void }) {
         <div className="onboarding-stage final personalization-reveal">
           <div className="welcome-orb">✦</div>
           <small className="eyebrow">Your Sēn is ready</small>
-          <h1>We’ll earn the membership later.</h1>
-          <p>You can explore, use Sēn AI, join Circles and book open-access experiences without subscribing. Membership appears when it clearly improves your access or economics.</p>
+          <h1>Sēn is ready to learn your rhythm.</h1>
+          <p>Your preferences can change. Sēn keeps learning from what you choose, skip and edit — and you can review or change what it remembers at any time.</p>
           <div className="first-win">
             <span>PERSONALIZED FOR YOU</span>
             <strong>{answers.movement || 'Reformer'} · tomorrow after 18h</strong>
@@ -695,7 +744,7 @@ export default function HomePage() {
       {view === 'privilege' && <PrivilegeView close={() => setView(null)} />}
       {view === 'squad' && <SquadView close={() => setView(null)} />}
       {view === 'upgrade' && <UpgradeView close={() => setView(null)} />}
-      {view === 'membership' && <MembershipView close={() => setView(null)} activate={() => { setHasMembership(true); setView(null); setTab('wallet'); }} />}
+      {view === 'membership' && <MembershipView close={() => setView(null)} activate={() => { setHasMembership(true); setView(null); setTab('wallet'); }} />}\n      {view === 'memory' && <MemoryView close={() => setView(null)} />}
     </main>
   );
 }
