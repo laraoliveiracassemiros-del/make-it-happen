@@ -11,7 +11,8 @@ type View =
   | 'recovery'
   | 'privilege'
   | 'squad'
-  | 'upgrade'\n  | 'membership';
+  | 'upgrade'
+  | 'membership';
 
 type Message = { role: 'user' | 'sen'; text: string };
 
@@ -344,7 +345,7 @@ function PartnerView({ close, open, hasMembership }: { close: () => void; open: 
     <Overlay close={close}>
       <div className="partner-hero">
         <button className="back" onClick={close}>←</button>
-        <Badge tone="dark">Included</Badge>
+        <Badge tone="dark">{hasMembership ? "Included" : "Open access"}</Badge>
         <div className="partner-monogram">R</div>
       </div>
       <div className="overlay-body">
@@ -394,7 +395,7 @@ function BookingView({ close, open, hasMembership }: { close: () => void; open: 
           <div><span>{hasMembership ? 'Plan impact' : 'Membership option'}</span><b>{hasMembership ? '1 studio visit' : 'Core · from R$ 399'}</b></div>
           <div><span>Free cancellation until</span><b>06:30 tomorrow</b></div>
         </div>
-        <p className="fine-print">Late cancel or no-show consumes this studio visit.</p>
+        <p className="fine-print">{hasMembership ? "Late cancel or no-show consumes this studio visit." : "Late cancellation follows the partner policy shown above."}</p>
 
         <button className="primary" onClick={() => open('confirmed')}>Confirm reservation</button>
         <p className="center-note">Nothing is booked until you confirm.</p>
@@ -403,7 +404,7 @@ function BookingView({ close, open, hasMembership }: { close: () => void; open: 
   );
 }
 
-function ConfirmedView({ close, open }: { close: () => void; open: (view: View) => void }) {
+function ConfirmedView({ close, open, hasMembership }: { close: () => void; open: (view: View) => void; hasMembership: boolean }) {
   return (
     <Overlay close={close}>
       <div className="overlay-body top-spaced">
@@ -415,7 +416,7 @@ function ConfirmedView({ close, open }: { close: () => void; open: (view: View) 
         <div className="ticket">
           <strong>18:30</strong>
           <small>ARRIVE BY 18:20</small>
-          <span>Included · 1 studio visit</span>
+          <span>{hasMembership ? "Included · 1 studio visit" : "Paid · R$ 78"}</span>
           <button>Add to calendar</button>
         </div>
 
@@ -633,7 +634,8 @@ function Overlay({ children, close }: { children: React.ReactNode; close: () => 
 export default function HomePage() {
   const [tab, setTab] = useState<Tab>('home');
   const [view, setView] = useState<View>(null);
-  const [onboarding, setOnboarding] = useState(true);\n  const [hasMembership, setHasMembership] = useState(false);
+  const [onboarding, setOnboarding] = useState(true);
+  const [hasMembership, setHasMembership] = useState(false);
 
   function changeTab(next: Tab) {
     setView(null);
@@ -682,16 +684,18 @@ export default function HomePage() {
         <button onClick={() => { setTab('sen'); setView(null); }}>Talk to Sēn</button>
         <button onClick={() => { setTab('wallet'); setView(null); }}>Open a Privilege</button>
         <button onClick={() => { setTab('circles'); setView('squad'); }}>Join a Squad</button>
-        <button onClick={() => { setView(null); setTab('home'); setOnboarding(true); setHasMembership(false); }}>Replay onboarding</button>\n        <button onClick={() => setView('membership')}>Preview membership</button>
+        <button onClick={() => { setView(null); setTab('home'); setOnboarding(true); setHasMembership(false); }}>Replay onboarding</button>
+        <button onClick={() => setView('membership')}>Preview membership</button>
       </aside>
 
       {view === 'partner' && <PartnerView close={() => setView(null)} open={open} hasMembership={hasMembership} />}
       {view === 'booking' && <BookingView close={() => setView(null)} open={open} hasMembership={hasMembership} />}
-      {view === 'confirmed' && <ConfirmedView close={() => setView(null)} open={open} />}
+      {view === 'confirmed' && <ConfirmedView close={() => setView(null)} open={open} hasMembership={hasMembership} />}
       {view === 'recovery' && <RecoveryView close={() => setView(null)} />}
       {view === 'privilege' && <PrivilegeView close={() => setView(null)} />}
       {view === 'squad' && <SquadView close={() => setView(null)} />}
-      {view === 'upgrade' && <UpgradeView close={() => setView(null)} />}\n      {view === 'membership' && <MembershipView close={() => setView(null)} activate={() => { setHasMembership(true); setView(null); setTab('wallet'); }} />}
+      {view === 'upgrade' && <UpgradeView close={() => setView(null)} />}
+      {view === 'membership' && <MembershipView close={() => setView(null)} activate={() => { setHasMembership(true); setView(null); setTab('wallet'); }} />}
     </main>
   );
 }
