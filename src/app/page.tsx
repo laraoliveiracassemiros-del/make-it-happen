@@ -11,7 +11,7 @@ type View =
   | 'recovery'
   | 'privilege'
   | 'squad'
-  | 'upgrade';
+  | 'upgrade'\n  | 'membership';
 
 type Message = { role: 'user' | 'sen'; text: string };
 
@@ -75,7 +75,7 @@ function AppHeader({ label }: { label?: string }) {
   );
 }
 
-function Home({ setTab, open }: { setTab: (tab: Tab) => void; open: (view: View) => void }) {
+function Home({ setTab, open, hasMembership }: { setTab: (tab: Tab) => void; open: (view: View) => void; hasMembership: boolean }) {
   return (
     <div className="screen-scroll">
       <AppHeader />
@@ -90,19 +90,19 @@ function Home({ setTab, open }: { setTab: (tab: Tab) => void; open: (view: View)
       </button>
 
       <SectionLabel>Your day</SectionLabel>
-      <button className="surface booking-card" onClick={() => open('confirmed')}>
+      <button className="surface booking-card" onClick={() => open(hasMembership ? 'confirmed' : 'partner')}>
         <div className="time-pill">18:30</div>
         <div>
           <strong>Reformer · Ativa</strong>
-          <span>Sudoeste · Included</span>
-          <em>Leave around 18:08</em>
+          <span>{hasMembership ? 'Sudoeste · Included' : 'Sudoeste · R$ 78 today'}</span>
+          <em>{hasMembership ? 'Leave around 18:08' : 'Core would include this visit'}</em>
         </div>
       </button>
 
       <SectionLabel>For you today</SectionLabel>
       <button className="editorial-card" onClick={() => setTab('explore')}>
         <div>
-          <Badge tone="dark">Included</Badge>
+          <Badge tone="dark">{hasMembership ? "Included" : "Open access"}</Badge>
           <h2>A slower evening.</h2>
           <p>Yoga · 20:00 · 9 min away</p>
         </div>
@@ -111,11 +111,13 @@ function Home({ setTab, open }: { setTab: (tab: Tab) => void; open: (view: View)
 
       <div className="value-row">
         <div>
-          <SectionLabel>Your value</SectionLabel>
-          <strong className="value-number">R$ 612</strong>
-          <span>used this month</span>
+          <SectionLabel>{hasMembership ? 'Your value' : 'Your Sēn potential'}</SectionLabel>
+          <strong className="value-number">{hasMembership ? 'R$ 612' : 'R$ 286'}</strong>
+          <span>{hasMembership ? 'used this month' : 'possible monthly savings based on your picks'}</span>
         </div>
-        <button className="text-link" onClick={() => setTab('wallet')}>View wallet →</button>
+        <button className="text-link" onClick={() => hasMembership ? setTab('wallet') : open('membership')}>
+          {hasMembership ? 'View wallet →' : 'See why Core fits →'}
+        </button>
       </div>
 
       <SectionLabel>Happening</SectionLabel>
@@ -283,29 +285,37 @@ function Circles({ open }: { open: (view: View) => void }) {
   );
 }
 
-function Wallet({ open }: { open: (view: View) => void }) {
+function Wallet({ open, hasMembership }: { open: (view: View) => void; hasMembership: boolean }) {
   return (
     <div className="screen-scroll">
       <AppHeader label="Wallet" />
       <section className="hero-copy">
-        <p>Your membership,</p>
-        <h1>working for you.</h1>
+        <p>{hasMembership ? 'Your membership,' : 'Your Sēn account,'}</p>
+        <h1>{hasMembership ? 'working for you.' : 'already learning your life.'}</h1>
       </section>
 
-      <div className="wallet-hero">
-        <small>This month</small>
-        <strong>R$ 612</strong>
-        <span>value used</span>
+      <div className={hasMembership ? "wallet-hero" : "wallet-hero free-wallet"}>
+        <small>{hasMembership ? 'This month' : 'Based on your activity'}</small>
+        <strong>{hasMembership ? 'R$ 612' : 'R$ 286'}</strong>
+        <span>{hasMembership ? 'value used' : 'potential monthly savings with Core'}</span>
         <div className="wallet-meta">
-          <span>Plus plan</span>
-          <span>R$ 799 / month</span>
+          <span>{hasMembership ? 'Plus plan' : 'No membership yet'}</span>
+          <span>{hasMembership ? 'R$ 799 / month' : 'Use Sēn free'}</span>
         </div>
       </div>
 
-      <SectionLabel>Your privileges</SectionLabel>
-      <button className="surface privilege-card" onClick={() => open('privilege')}>
+      {!hasMembership && (
+        <button className="membership-nudge" onClick={() => open('membership')}>
+          <span>BASED ON YOUR USE</span>
+          <strong>Core would already make sense for you.</strong>
+          <em>See the exact benefits →</em>
+        </button>
+      )}
+
+      <SectionLabel>{hasMembership ? 'Your privileges' : 'Member-only preview'}</SectionLabel>
+      <button className="surface privilege-card" onClick={() => hasMembership ? open('privilege') : open('membership')}>
         <div>
-          <Badge>1 available</Badge>
+          <Badge>{hasMembership ? '1 available' : 'Core benefit'}</Badge>
           <strong>Recovery massage</strong>
           <span>50 min · expires Sep 30</span>
         </div>
@@ -319,16 +329,16 @@ function Wallet({ open }: { open: (view: View) => void }) {
         <div><span>Privilege · Recovery</span><b>R$ 0</b></div>
       </div>
 
-      <button className="upgrade-card" onClick={() => open('upgrade')}>
-        <span>PLUS → BLACK</span>
-        <strong>See what would actually change for you</strong>
-        <em>Not just more features. More access.</em>
+      <button className="upgrade-card" onClick={() => open(hasMembership ? 'upgrade' : 'membership')}>
+        <span>{hasMembership ? 'PLUS → BLACK' : 'MEMBERSHIP, WHEN IT EARNS IT'}</span>
+        <strong>{hasMembership ? 'See what would actually change for you' : 'Sēn stays useful before you subscribe.'}</strong>
+        <em>{hasMembership ? 'Not just more features. More access.' : 'Upgrade when the savings and access become obvious.'}</em>
       </button>
     </div>
   );
 }
 
-function PartnerView({ close, open }: { close: () => void; open: (view: View) => void }) {
+function PartnerView({ close, open, hasMembership }: { close: () => void; open: (view: View) => void; hasMembership: boolean }) {
   const [time, setTime] = useState('18:30');
   return (
     <Overlay close={close}>
@@ -342,7 +352,7 @@ function PartnerView({ close, open }: { close: () => void; open: (view: View) =>
         <p className="muted-line">Sudoeste · Reformer Pilates · 4.9</p>
 
         <SectionLabel>Why Sēn picked this</SectionLabel>
-        <p className="body-copy">Fits your evening, 11 min away, and the selected slot is included in your plan.</p>
+        <p className="body-copy">{hasMembership ? "Fits your evening, 11 min away, and this slot is included in your plan." : "Fits your evening and is 11 min away. You can book it now for R$ 78 — or Core would include eligible visits like this."}</p>
 
         <SectionLabel>Tomorrow</SectionLabel>
         <div className="time-row">
@@ -364,7 +374,7 @@ function PartnerView({ close, open }: { close: () => void; open: (view: View) =>
   );
 }
 
-function BookingView({ close, open }: { close: () => void; open: (view: View) => void }) {
+function BookingView({ close, open, hasMembership }: { close: () => void; open: (view: View) => void; hasMembership: boolean }) {
   return (
     <Overlay close={close}>
       <div className="overlay-body top-spaced">
@@ -373,15 +383,15 @@ function BookingView({ close, open }: { close: () => void; open: (view: View) =>
         <h1>Almost yours.</h1>
 
         <div className="surface summary-card">
-          <Badge>Included</Badge>
+          <Badge>{hasMembership ? 'Included' : 'Open access'}</Badge>
           <strong>Ativa Reformer</strong>
           <span>Tomorrow · 18:30–19:20</span>
           <span>Sudoeste</span>
         </div>
 
         <div className="summary-lines">
-          <div><span>Your cost today</span><b>R$ 0</b></div>
-          <div><span>Plan impact</span><b>1 studio visit</b></div>
+          <div><span>Your cost today</span><b>{hasMembership ? 'R$ 0' : 'R$ 78'}</b></div>
+          <div><span>{hasMembership ? 'Plan impact' : 'Membership option'}</span><b>{hasMembership ? '1 studio visit' : 'Core · from R$ 399'}</b></div>
           <div><span>Free cancellation until</span><b>06:30 tomorrow</b></div>
         </div>
         <p className="fine-print">Late cancel or no-show consumes this studio visit.</p>
@@ -517,72 +527,100 @@ function UpgradeView({ close }: { close: () => void }) {
 }
 
 
+
+function MembershipView({ close, activate }: { close: () => void; activate: () => void }) {
+  const [selected, setSelected] = useState<'Core'|'Plus'|'Black'>('Core');
+  const plans = [
+    { name: 'Core' as const, price: 'R$ 399', line: 'The everyday membership.', detail: 'Eligible studios ~2×/week · premium gyms · 1 Privilege' },
+    { name: 'Plus' as const, price: 'R$ 799', line: 'More range, more often.', detail: 'Studios ~4×/week · broader premium access · 2 Privileges' },
+    { name: 'Black' as const, price: 'R$ 1.299', line: 'Rarer access, less friction.', detail: 'Studios ~6×/week · Signature access · 3 Privileges' },
+  ];
+  return (
+    <Overlay close={close}>
+      <div className="overlay-body top-spaced membership-view">
+        <button className="back light" onClick={close}>←</button>
+        <small className="eyebrow">Membership, when it makes sense</small>
+        <h1>You can use Sēn without one.</h1>
+        <p className="muted-line">Membership unlocks better economics, included access and premium privileges. We want you to feel the need before we ask you to subscribe.</p>
+        <div className="membership-proof">
+          <span>BASED ON YOUR CURRENT PICKS</span>
+          <strong>Core could save about R$ 286/month</strong>
+          <em>Prototype estimate, not a promise.</em>
+        </div>
+        <div className="plan-stack compact-plans">
+          {plans.map((item) => (
+            <button key={item.name} className={selected===item.name?'plan-card selected':'plan-card'} onClick={()=>setSelected(item.name)}>
+              <div><strong>{item.name}</strong><span>{item.line}<br />{item.detail}</span></div>
+              <b>{item.price}</b>
+            </button>
+          ))}
+        </div>
+        <button className="primary" onClick={activate}>Start {selected} in prototype</button>
+        <button className="quiet-button" onClick={close}>Keep using Sēn free</button>
+      </div>
+    </Overlay>
+  );
+}
+
 function Onboarding({ finish }: { finish: () => void }) {
+  const questions = [
+    { key: 'goal', q: 'What do you want more of?', options: ['Energy', 'Strength', 'Calm', 'Focus'] },
+    { key: 'routine', q: 'When does real life usually win?', options: ['Early morning', 'Afternoon', 'Evening', 'It changes'] },
+    { key: 'movement', q: 'What do you actually enjoy?', options: ['Gym', 'Reformer', 'Yoga', 'Combat / HIIT'] },
+    { key: 'recovery', q: 'How much does recovery matter?', options: ['A lot', 'Sometimes', 'Rarely', 'I want to discover it'] },
+    { key: 'work', q: 'Do you work or study outside home?', options: ['Often', 'Sometimes', 'Rarely', 'Never'] },
+    { key: 'social', q: 'Would you do more with the right people?', options: ['Definitely', 'Maybe', 'Not really', 'Depends on the activity'] },
+    { key: 'distance', q: 'How far feels effortless?', options: ['Up to 10 min', '15 min', '20 min', 'Quality matters more'] },
+    { key: 'spend', q: 'What do you already spend monthly?', options: ['Under R$300', 'R$300–600', 'R$600–1.000', 'R$1.000+'] },
+  ];
   const [step, setStep] = useState(0);
-  const [plan, setPlan] = useState<'Core' | 'Plus' | 'Black'>('Plus');
-  const [intent, setIntent] = useState('Feel better');
+  const [answers, setAnswers] = useState<Record<string,string>>({});
+  const done = step >= questions.length;
+  const current = questions[Math.min(step, questions.length-1)];
+
+  function choose(value: string) {
+    setAnswers((prev)=>({...prev,[current.key]:value}));
+    setTimeout(()=>setStep((s)=>s+1),120);
+  }
 
   return (
-    <div className="onboarding">
+    <div className="onboarding future-onboarding">
       <div className="onboarding-top">
         <div className="brand-word large">Sēn</div>
-        <span>{step + 1} / 3</span>
+        <span>{done ? 'Ready' : `${step + 1} / 8`}</span>
       </div>
 
-      {step === 0 && (
-        <div className="onboarding-stage">
-          <small className="eyebrow">Membership for real life</small>
-          <h1>More life.<br />Less friction.</h1>
-          <p>Move, recover, work, discover and organize your week through one calm membership.</p>
-          <div className="intent-grid">
-            {['Feel better', 'Move more', 'Try new things', 'Recover', 'Work better', 'Meet people'].map((item) => (
-              <button key={item} className={intent === item ? 'intent active' : 'intent'} onClick={() => setIntent(item)}>{item}</button>
-            ))}
-          </div>
-          <button className="primary" onClick={() => setStep(1)}>Continue</button>
-        </div>
-      )}
-
-      {step === 1 && (
-        <div className="onboarding-stage">
-          <small className="eyebrow">Your membership</small>
-          <h1>Choose how much access you want.</h1>
-          <div className="plan-stack">
-            {[
-              { name: 'Core' as const, price: 'R$ 399', note: 'A strong everyday base.' },
-              { name: 'Plus' as const, price: 'R$ 799', note: 'More studio access + privileges.' },
-              { name: 'Black' as const, price: 'R$ 1.299', note: 'Signature access + concierge.' },
-            ].map((item) => (
-              <button key={item.name} className={plan === item.name ? 'plan-card selected' : 'plan-card'} onClick={() => setPlan(item.name)}>
-                <div><strong>{item.name}</strong><span>{item.note}</span></div>
-                <b>{item.price}</b>
+      {!done ? (
+        <div className="onboarding-stage quiz-stage" key={step}>
+          <small className="eyebrow">Make Sēn yours</small>
+          <h1>{current.q}</h1>
+          <p>No plan selection. No commitment. Just enough context to make the app useful from the first screen.</p>
+          <div className="quiz-options">
+            {current.options.map((item)=>(
+              <button key={item} className="quiz-option" onClick={()=>choose(item)}>
+                <span>{item}</span><b>→</b>
               </button>
             ))}
           </div>
-          <button className="primary" onClick={() => setStep(2)}>Continue with {plan}</button>
-          <button className="quiet-button" onClick={() => setStep(0)}>Back</button>
+          {step>0 && <button className="quiet-button" onClick={()=>setStep((s)=>s-1)}>Back</button>}
         </div>
-      )}
-
-      {step === 2 && (
-        <div className="onboarding-stage final">
+      ) : (
+        <div className="onboarding-stage final personalization-reveal">
           <div className="welcome-orb">✦</div>
-          <small className="eyebrow">You’re ready</small>
-          <h1>Let Sēn work around your real life.</h1>
-          <p>Your starting intent is <b>{intent}</b> and your prototype plan is <b>{plan}</b>. Nothing here charges you.</p>
+          <small className="eyebrow">Your Sēn is ready</small>
+          <h1>We’ll earn the membership later.</h1>
+          <p>You can explore, use Sēn AI, join Circles and book open-access experiences without subscribing. Membership appears when it clearly improves your access or economics.</p>
           <div className="first-win">
-            <span>FIRST SUGGESTION</span>
-            <strong>Reformer tomorrow · 18:30</strong>
-            <em>11 min away · Included</em>
+            <span>PERSONALIZED FOR YOU</span>
+            <strong>{answers.movement || 'Reformer'} · tomorrow after 18h</strong>
+            <em>{answers.distance || '11 min away'} · open access</em>
           </div>
           <button className="primary" onClick={finish}>Enter Sēn</button>
-          <button className="quiet-button" onClick={() => setStep(1)}>Back</button>
         </div>
       )}
     </div>
   );
 }
-
 function Overlay({ children, close }: { children: React.ReactNode; close: () => void }) {
   return (
     <div className="overlay">
@@ -595,7 +633,7 @@ function Overlay({ children, close }: { children: React.ReactNode; close: () => 
 export default function HomePage() {
   const [tab, setTab] = useState<Tab>('home');
   const [view, setView] = useState<View>(null);
-  const [onboarding, setOnboarding] = useState(true);
+  const [onboarding, setOnboarding] = useState(true);\n  const [hasMembership, setHasMembership] = useState(false);
 
   function changeTab(next: Tab) {
     setView(null);
@@ -626,11 +664,11 @@ export default function HomePage() {
           <div className="statusbar"><span>13:10</span><span>● ● ◒</span></div>
           <div className="app">
             {onboarding && <Onboarding finish={() => setOnboarding(false)} />}
-            {tab === 'home' && <Home setTab={changeTab} open={open} />}
+            {tab === 'home' && <Home setTab={changeTab} open={open} hasMembership={hasMembership} />}
             {tab === 'explore' && <Explore open={open} />}
             {tab === 'sen' && <SenAI open={open} />}
             {tab === 'circles' && <Circles open={open} />}
-            {tab === 'wallet' && <Wallet open={open} />}
+            {tab === 'wallet' && <Wallet open={open} hasMembership={hasMembership} />}
             <BottomNav active={tab} onChange={changeTab} />
           </div>
           <div className="home-indicator" />
@@ -644,16 +682,16 @@ export default function HomePage() {
         <button onClick={() => { setTab('sen'); setView(null); }}>Talk to Sēn</button>
         <button onClick={() => { setTab('wallet'); setView(null); }}>Open a Privilege</button>
         <button onClick={() => { setTab('circles'); setView('squad'); }}>Join a Squad</button>
-        <button onClick={() => { setView(null); setTab('home'); setOnboarding(true); }}>Replay onboarding</button>
+        <button onClick={() => { setView(null); setTab('home'); setOnboarding(true); setHasMembership(false); }}>Replay onboarding</button>\n        <button onClick={() => setView('membership')}>Preview membership</button>
       </aside>
 
-      {view === 'partner' && <PartnerView close={() => setView(null)} open={open} />}
-      {view === 'booking' && <BookingView close={() => setView(null)} open={open} />}
+      {view === 'partner' && <PartnerView close={() => setView(null)} open={open} hasMembership={hasMembership} />}
+      {view === 'booking' && <BookingView close={() => setView(null)} open={open} hasMembership={hasMembership} />}
       {view === 'confirmed' && <ConfirmedView close={() => setView(null)} open={open} />}
       {view === 'recovery' && <RecoveryView close={() => setView(null)} />}
       {view === 'privilege' && <PrivilegeView close={() => setView(null)} />}
       {view === 'squad' && <SquadView close={() => setView(null)} />}
-      {view === 'upgrade' && <UpgradeView close={() => setView(null)} />}
+      {view === 'upgrade' && <UpgradeView close={() => setView(null)} />}\n      {view === 'membership' && <MembershipView close={() => setView(null)} activate={() => { setHasMembership(true); setView(null); setTab('wallet'); }} />}
     </main>
   );
 }
