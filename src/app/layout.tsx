@@ -1,15 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import './polish.css';
 
 export const metadata: Metadata = {
-  title: 'Make It Happen — Precisou. Aconteceu.',
-  description: 'A plataforma que transforma intenção em execução no mundo real.',
-  openGraph: {
-    title: 'Make It Happen',
-    description: 'Você pede o resultado. A plataforma faz acontecer.',
-    type: 'website',
-  },
+  title: 'Sēn — MVP Prototype',
+  description: 'Premium membership for real-world life: access, AI, community and value.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
