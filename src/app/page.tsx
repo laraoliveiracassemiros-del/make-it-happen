@@ -82,6 +82,10 @@ function Home({ setTab, open, hasMembership }: { setTab: (tab: Tab) => void; ope
   return (
     <div className="screen-scroll">
       <AppHeader />
+      <div className="account-state">
+        <span>{hasMembership ? 'PLUS MEMBER' : 'SĒN FREE'}</span>
+        <b>{hasMembership ? 'Your benefits are active' : 'No subscription · pay as you go'}</b>
+      </div>
       <section className="hero-copy">
         <p>Boa tarde.</p>
         <h1>What would make today feel better?</h1>
@@ -130,6 +134,17 @@ function Home({ setTab, open, hasMembership }: { setTab: (tab: Tab) => void; ope
         </button>
       </div>
 
+      {!hasMembership && (
+        <button className="free-economics-card" onClick={() => setTab('wallet')}>
+          <div>
+            <span>4 ELIGIBLE VISITS THIS MONTH</span>
+            <strong>R$ 286 spent · R$ 32 wallet credit</strong>
+            <em>One more similar booking and Core starts to compete strongly.</em>
+          </div>
+          <b>→</b>
+        </button>
+      )}
+
       <SectionLabel>Happening</SectionLabel>
       <button className="surface compact-card" onClick={() => open('squad')}>
         <div>
@@ -164,6 +179,14 @@ function Explore({ open, hasMembership }: { open: (view: View) => void; hasMembe
           <button key={chip} className={index === 0 ? 'chip selected' : 'chip'}>{chip}</button>
         ))}
       </div>
+
+      {!hasMembership && (
+        <div className="price-legend">
+          <span><i className="dot free" /> Sēn Price</span>
+          <span><i className="dot member" /> Member Price</span>
+          <span><i className="dot included" /> Included with plan</span>
+        </div>
+      )}
 
       <SectionLabel>Best matches</SectionLabel>
 
@@ -307,6 +330,10 @@ function Wallet({ open, hasMembership }: { open: (view: View) => void; hasMember
   return (
     <div className="screen-scroll">
       <AppHeader label="Wallet" />
+      <div className="account-state wallet-state">
+        <span>{hasMembership ? 'PLUS ACTIVE' : 'SĒN FREE'}</span>
+        <b>{hasMembership ? 'Included access + privileges unlocked' : 'Pay-per-use + wallet credits + packs'}</b>
+      </div>
       <section className="hero-copy">
         <p>{hasMembership ? 'Your membership,' : 'Your Sēn account,'}</p>
         <h1>{hasMembership ? 'working for you.' : 'already learning your life.'}</h1>
@@ -601,8 +628,8 @@ function PacksView({ close }: { close: () => void }) {
 
         <div className="pack-vs-core">
           <span>SMART COMPARISON</span>
-          <strong>Buying packs every month? Core may already be better.</strong>
-          <p>Core adds selected gym access, eligible studio visits and a monthly Privilege on top of recurring value.</p>
+          <strong>{selected >= 5 ? 'At this frequency, compare Core before buying.' : 'A pack still makes sense at lighter usage.'}</strong>
+          <p>{selected >= 5 ? 'Core adds selected gym access, eligible studio visits and a monthly Privilege — recurring use is where membership should win.' : 'Use Free + Packs while your routine is occasional. Sēn will show you when that changes.'}</p>
         </div>
 
         <button className="primary">Buy {selected} passes in prototype</button>
@@ -665,6 +692,14 @@ function MembershipView({ close, activate }: { close: () => void; activate: () =
           <strong>Your current pattern: R$ 286 spent · ~4 eligible visits</strong>
           <em>At ~5+ eligible visits/month, Core typically becomes more attractive. Prototype estimate.</em>
         </div>
+        <div className="membership-compare">
+          <div className="compare-head"><span>FREE</span><span>CORE</span><span>PLUS</span><span>BLACK</span></div>
+          <div><b>Studio access</b><span>Pay / pack</span><span>~8–9</span><span>~17–18</span><span>~25–26</span></div>
+          <div><b>Premium gyms</b><span>—</span><span>Selected</span><span>More</span><span>+ Signature</span></div>
+          <div><b>Privileges</b><span>Preview</span><span>1 / mo</span><span>2 / mo</span><span>3 / mo</span></div>
+          <div><b>Sēn AI</b><span>Full</span><span>Full</span><span>Full</span><span>+ concierge</span></div>
+        </div>
+
         <div className="plan-stack compact-plans">
           {plans.map((item) => (
             <button key={item.name} className={selected===item.name?'plan-card selected':'plan-card'} onClick={()=>setSelected(item.name)}>
@@ -674,7 +709,7 @@ function MembershipView({ close, activate }: { close: () => void; activate: () =
           ))}
         </div>
         <button className="primary" onClick={activate}>Start {selected} in prototype</button>
-        <button className="quiet-button" onClick={close}>Keep using Sēn free</button>
+        <button className="quiet-button keep-free" onClick={close}>Keep Sēn Free</button>
       </div>
     </Overlay>
   );
@@ -804,6 +839,8 @@ export default function HomePage() {
         <button onClick={() => { setView(null); setTab('home'); setOnboarding(true); setHasMembership(false); }}>Replay onboarding</button>
         <button onClick={() => setView('packs')}>Preview Flex Packs</button>
         <button onClick={() => setView('membership')}>Preview membership</button>
+        <button onClick={() => { setHasMembership(true); setTab('home'); setView(null); setOnboarding(false); }}>Simulate Plus member</button>
+        <button onClick={() => { setHasMembership(false); setTab('home'); setView(null); setOnboarding(false); }}>Simulate Free user</button>
       </aside>
 
       {view === 'partner' && <PartnerView close={() => setView(null)} open={open} hasMembership={hasMembership} />}
