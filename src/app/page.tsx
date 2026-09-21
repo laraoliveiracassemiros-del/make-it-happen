@@ -643,7 +643,7 @@ function PacksView({ close }: { close: () => void }) {
           <p>{selected >= 5 ? 'Core adds selected gym access, eligible studio visits and a monthly Privilege — recurring use is where membership should win.' : 'Use Free + Packs while your routine is occasional. Sēn will show you when that changes.'}</p>
         </div>
 
-        <button className="primary">Buy {selected} passes in prototype</button>
+        <button className="primary">Buy {selected} passes no protótipo</button>
         <button className="quiet-button" onClick={close}>Not now</button>
       </div>
     </Overlay>
@@ -653,7 +653,7 @@ function PacksView({ close }: { close: () => void }) {
 function MemoryView({ close }: { close: () => void }) {
   const [boxing, setBoxing] = useState(true);
   const [pilates, setPilates] = useState(true);
-  const [afternoon, setAfternoon] = useState(true);
+  const [afternoon, setTarde] = useState(true);
   return (
     <Overlay close={close}>
       <div className="overlay-body top-spaced memory-view">
@@ -669,7 +669,7 @@ function MemoryView({ close }: { close: () => void }) {
           <button onClick={() => setPilates(!pilates)} className={pilates ? 'memory-row active' : 'memory-row'}>
             <div><strong>Pilates / Reformer</strong><span>Preferência crescente</span></div><b>{pilates ? 'On' : 'Off'}</b>
           </button>
-          <button onClick={() => setAfternoon(!afternoon)} className={afternoon ? 'memory-row active' : 'memory-row'}>
+          <button onClick={() => setTarde(!afternoon)} className={afternoon ? 'memory-row active' : 'memory-row'}>
             <div><strong>Fim de tarde</strong><span>Costuma funcionar bem</span></div><b>{afternoon ? 'On' : 'Off'}</b>
           </button>
         </div>
@@ -687,19 +687,19 @@ function MemoryView({ close }: { close: () => void }) {
 function MembershipView({ close, activate }: { close: () => void; activate: (plan: 'Core'|'Plus'|'Black') => void }) {
   const [selected, setSelected] = useState<'Core'|'Plus'|'Black'>('Core');
   const plans = [
-    { name: 'Core' as const, price: 'R$ 399', line: 'The everyday membership.', detail: 'Eligible studios ~2×/week · premium gyms · 1 Privilege' },
-    { name: 'Plus' as const, price: 'R$ 799', line: 'More range, more often.', detail: 'Studios ~4×/week · broader premium access · 2 Privilégios' },
-    { name: 'Black' as const, price: 'R$ 1.299', line: 'Rarer access, less friction.', detail: 'Studios ~6×/week · Acesso Signature · 3 Privilégios' },
+    { name: 'Core' as const, price: 'R$ 399', line: 'Para quem usa toda semana.', detail: 'Eligible studios ~2×/week · premium gyms · 1 Privilege' },
+    { name: 'Plus' as const, price: 'R$ 799', line: 'Mais frequência e variedade.', detail: 'Studios ~4×/week · broader premium access · 2 Privilégios' },
+    { name: 'Black' as const, price: 'R$ 1.299', line: 'Mais acesso especial e menos atrito.', detail: 'Studios ~6×/week · Acesso Signature · 3 Privilégios' },
   ];
   return (
     <Overlay close={close}>
       <div className="overlay-body top-spaced membership-view">
         <button className="back light" onClick={close}>←</button>
-        <small className="eyebrow">Membership, when it makes sense</small>
-        <h1>You can use Sēn without one.</h1>
-        <p className="muted-line">Membership unlocks better economics, included access and premium privileges. We want you to feel the need before we ask you to subscribe.</p>
+        <small className="eyebrow">Assinatura, quando fizer sentido</small>
+        <h1>Você pode usar a Sēn sem assinatura.</h1>
+        <p className="muted-line">A assinatura melhora acesso, preço e benefícios quando o seu uso justificar.</p>
         <div className="membership-proof">
-          <span>BASED ON YOUR CURRENT PICKS</span>
+          <span>PELO SEU USO ATUAL</span>
           <strong>Your current pattern: R$ 286 usados · ~4 eligible visits</strong>
           <em>At ~5+ eligible visits/month, Core typically becomes more attractive. Prototype estimate.</em>
         </div>
@@ -719,8 +719,8 @@ function MembershipView({ close, activate }: { close: () => void; activate: (pla
             </button>
           ))}
         </div>
-        <button className="primary" onClick={() => activate(selected)}>Start {selected} in prototype</button>
-        <button className="quiet-button keep-free" onClick={close}>Keep Sēn Free</button>
+        <button className="primary" onClick={() => activate(selected)}>Simular {selected} no protótipo</button>
+        <button className="quiet-button keep-free" onClick={close}>Continuar sem assinatura</button>
       </div>
     </Overlay>
   );
@@ -728,14 +728,14 @@ function MembershipView({ close, activate }: { close: () => void; activate: (pla
 
 function Onboarding({ finish }: { finish: () => void }) {
   const questions = [
-    { key: 'goal', q: 'What do you want more of?', options: ['Energy', 'Strength', 'Calm', 'Focus'] },
-    { key: 'routine', q: 'When does real life usually win?', options: ['Early morning', 'Afternoon', 'Evening', 'It changes'] },
-    { key: 'movement', q: 'What do you actually enjoy?', options: ['Gym', 'Reformer', 'Yoga', 'Combat / HIIT'] },
-    { key: 'recovery', q: 'How much does recovery matter?', options: ['A lot', 'Sometimes', 'Rarely', 'I want to discover it'] },
-    { key: 'work', q: 'Do you work or study outside home?', options: ['Often', 'Sometimes', 'Rarely', 'Never'] },
-    { key: 'social', q: 'Would you do more with the right people?', options: ['Definitely', 'Maybe', 'Not really', 'Depends on the activity'] },
-    { key: 'distance', q: 'How far feels effortless?', options: ['Up to 10 min', '15 min', '20 min', 'Quality matters more'] },
-    { key: 'spend', q: 'What do you already spend monthly?', options: ['Under R$300', 'R$300–600', 'R$600–1.000', 'R$1.000+'] },
+    { key: 'goal', q: 'O que você quer sentir mais na sua rotina?', options: ['Energia', 'Força', 'Calma', 'Foco'] },
+    { key: 'routine', q: 'Quando costuma existir espaço de verdade?', options: ['Manhã cedo', 'Tarde', 'Noite', 'Muda muito'] },
+    { key: 'movement', q: 'O que você realmente gosta de fazer?', options: ['Academia', 'Reformer', 'Yoga', 'Boxe / HIIT'] },
+    { key: 'recovery', q: 'Recuperação faz parte da sua rotina?', options: ['Bastante', 'Às vezes', 'Quase nunca', 'Quero descobrir'] },
+    { key: 'work', q: 'Você trabalha ou estuda fora de casa?', options: ['Quase todo dia', 'Às vezes', 'Quase nunca', 'Não'] },
+    { key: 'social', q: 'Você faria mais coisas com as pessoas certas?', options: ['Sim', 'Talvez', 'Não muito', 'Depende'] },
+    { key: 'distance', q: 'Quanto deslocamento ainda parece fácil?', options: ['Até 10 min', '15 min', '20 min', 'Qualidade importa mais'] },
+    { key: 'spend', q: 'Quanto você já gasta por mês com isso?', options: ['Até R$ 300', 'R$ 300–600', 'R$ 600–1.000', 'R$1.000+'] },
   ];
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string,string>>({});
@@ -751,14 +751,14 @@ function Onboarding({ finish }: { finish: () => void }) {
     <div className="onboarding future-onboarding">
       <div className="onboarding-top">
         <div className="brand-word large">Sēn</div>
-        <span>{done ? 'Ready' : `${step + 1} / 8`}</span>
+        <span>{done ? 'Pronto' : `${step + 1} / 8`}</span>
       </div>
 
       {!done ? (
         <div className="onboarding-stage quiz-stage" key={step}>
-          <small className="eyebrow">Make Sēn yours</small>
+          <small className="eyebrow">Personalize sua Sēn</small>
           <h1>{current.q}</h1>
-          <p>No plan selection. No commitment. Just enough context to make the app useful from the first screen.</p>
+          <p>Sem plano e sem compromisso. Só contexto suficiente para deixar o app útil desde o começo.</p>
           <div className="quiz-options">
             {current.options.map((item)=>(
               <button key={item} className="quiz-option" onClick={()=>choose(item)}>
@@ -771,15 +771,15 @@ function Onboarding({ finish }: { finish: () => void }) {
       ) : (
         <div className="onboarding-stage final personalization-reveal">
           <div className="welcome-orb">✦</div>
-          <small className="eyebrow">Your Sēn is ready</small>
-          <h1>Sēn is ready to learn your rhythm.</h1>
-          <p>Your preferences can change. Sēn keeps learning from what you choose, skip and edit — and you can review or change what it remembers at any time.</p>
+          <small className="eyebrow">Sua Sēn está pronta</small>
+          <h1>A Sēn já consegue começar com você.</h1>
+          <p>Ela aprende com o que você escolhe, ignora e muda. E você controla o que ela lembra.</p>
           <div className="first-win">
-            <span>PERSONALIZED FOR YOU</span>
+            <span>PARA VOCÊ</span>
             <strong>{answers.movement || 'Reformer'} · tomorrow after 18h</strong>
-            <em>{answers.distance || '11 min away'} · open access</em>
+            <em>{answers.distance || '11 min away'} · acesso avulso</em>
           </div>
-          <button className="primary" onClick={finish}>Enter Sēn</button>
+          <button className="primary" onClick={finish}>Entrar na Sēn</button>
         </div>
       )}
     </div>
@@ -814,7 +814,7 @@ export default function InícioPage() {
     <main className="prototype-shell">
       <aside className="prototype-notes">
         <div className="prototype-mark">Sēn</div>
-        <p>Clickable MVP prototype</p>
+        <p>Protótipo clicável</p>
         <h2>Access + AI + Community + Value.</h2>
         <ul>
           <li>Explorar → booking → recovery</li>
@@ -822,7 +822,7 @@ export default function InícioPage() {
           <li>Carteira & Privilégios</li>
           <li>Círculos & Squads</li>
         </ul>
-        <span>Brasília · V1 · 18+</span>
+        <span>Brasília · V6 · 18+</span>
       </aside>
 
       <div className="device-wrap">
@@ -843,16 +843,16 @@ export default function InícioPage() {
 
       <aside className="prototype-side">
         <span>TEST</span>
-        <strong>Try these flows</strong>
-        <button onClick={() => { setTab('explore'); setView(null); }}>Book a reformer</button>
-        <button onClick={() => { setTab('sen'); setView(null); }}>Talk to Sēn</button>
-        <button onClick={() => { setTab('wallet'); setView(null); }}>Open a Privilege</button>
-        <button onClick={() => { setTab('circles'); setView('squad'); }}>Join a Squad</button>
-        <button onClick={() => { setView(null); setTab('home'); setOnboarding(true); setMemberPlan(null); }}>Replay onboarding</button>
-        <button onClick={() => setView('packs')}>Preview Flex Packs</button>
-        <button onClick={() => setView('membership')}>Preview membership</button>
-        <button onClick={() => { setMemberPlan('Plus'); setTab('home'); setView(null); setOnboarding(false); }}>Simulate Plus member</button>
-        <button onClick={() => { setMemberPlan(null); setTab('home'); setView(null); setOnboarding(false); }}>Simulate Free user</button>
+        <strong>Teste estes fluxos</strong>
+        <button onClick={() => { setTab('explore'); setView(null); }}>Reservar reformer</button>
+        <button onClick={() => { setTab('sen'); setView(null); }}>Falar com a Sēn</button>
+        <button onClick={() => { setTab('wallet'); setView(null); }}>Abrir benefício</button>
+        <button onClick={() => { setTab('circles'); setView('squad'); }}>Entrar em Squad</button>
+        <button onClick={() => { setView(null); setTab('home'); setOnboarding(true); setMemberPlan(null); }}>Refazer onboarding</button>
+        <button onClick={() => setView('packs')}>Ver Flex Packs</button>
+        <button onClick={() => setView('membership')}>Ver assinatura</button>
+        <button onClick={() => { setMemberPlan('Plus'); setTab('home'); setView(null); setOnboarding(false); }}>Simular Plus</button>
+        <button onClick={() => { setMemberPlan(null); setTab('home'); setView(null); setOnboarding(false); }}>Simular sem assinatura</button>
       </aside>
 
       {view === 'partner' && <PartnerView close={() => setView(null)} open={open} hasMembership={hasMembership} />}
