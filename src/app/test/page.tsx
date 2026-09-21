@@ -4,16 +4,16 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 const tasks = [
-  'Finish the onboarding without help.',
-  'Find a Reformer class after 18:00.',
-  'Book it as a Sēn Free user.',
-  'Open Wallet and explain what the R$ credit means.',
-  'Find Flex Packs and explain when you would choose one.',
-  'Explain Sēn Price vs Member Price vs Included.',
-  'Ask Sēn AI for something cheap and nearby.',
-  'Change something in “What Sēn remembers”.',
-  'Find a Circle or Squad you might actually join.',
-  'Compare Free vs Core in your own words.',
+  'Conclua o onboarding sem ajuda.',
+  'Encontre uma aula de Reformer depois das 18h.',
+  'Reserve como pessoa sem assinatura.',
+  'Abra a Carteira e explique o que significa o saldo em R$.',
+  'Encontre os Flex Packs e explique quando você escolheria um.',
+  'Explique Preço Sēn, Preço de membro e Incluído.',
+  'Peça à Sēn algo barato e perto.',
+  'Mude alguma coisa no que a Sēn lembra.',
+  'Encontre um Círculo ou Squad do qual você realmente participaria.',
+  'Compare usar sem assinatura com Core usando suas próprias palavras.',
 ];
 
 export default function ExternalTestPage() {
@@ -26,19 +26,19 @@ export default function ExternalTestPage() {
       <main className="external-test-shell">
         <section className="test-card consent-card">
           <div className="test-brand">Sēn</div>
-          <span className="test-kicker">PRODUCT RESEARCH</span>
-          <h1>Help us test something before we explain it.</h1>
+          <span className="test-kicker">PESQUISA DE PRODUTO</span>
+          <h1>Ajude a gente a testar antes de explicar.</h1>
           <p>
             This is a prototype study for adults. There are no real charges, bookings or memberships.
             We want to see what feels obvious, confusing, useful or unnecessary.
           </p>
           <div className="test-rules">
-            <div><b>25–30 min</b><span>Typical session</span></div>
-            <div><b>No right answers</b><span>Confusion is useful data</span></div>
-            <div><b>No real purchases</b><span>Prototype only</span></div>
+            <div><b>25–30 min</b><span>Duração média</span></div>
+            <div><b>Não existe resposta certa</b><span>Confusão também é dado</span></div>
+            <div><b>Sem compra real</b><span>Somente protótipo</span></div>
           </div>
-          <button className="test-primary" onClick={() => setConsent(true)}>I’m 18+ and ready to test</button>
-          <small>By continuing, you agree to share product-research feedback for this prototype session.</small>
+          <button className="test-primary" onClick={() => setConsent(true)}>Tenho 18+ e quero testar</button>
+          <small>Ao continuar, você concorda em compartilhar feedback de pesquisa sobre esta sessão de protótipo.</small>
         </section>
       </main>
     );
@@ -49,17 +49,17 @@ export default function ExternalTestPage() {
       <main className="external-test-shell">
         <section className="test-card finish-card">
           <div className="test-brand">Sēn</div>
-          <span className="test-kicker">THANK YOU</span>
-          <h1>That’s the test.</h1>
-          <p>What confused you matters more than what looked beautiful. Your moderator will ask a few short questions now.</p>
+          <span className="test-kicker">OBRIGADA</span>
+          <h1>O teste terminou.</h1>
+          <p>O que confundiu você importa mais do que o que ficou bonito. Agora vamos fazer algumas perguntas curtas.</p>
           <div className="finish-prompts">
-            <b>Be ready to explain:</b>
-            <span>What Sēn is.</span>
-            <span>When you would stay Free.</span>
-            <span>When you would choose Core.</span>
-            <span>Whether the AI felt genuinely useful.</span>
+            <b>Prepare-se para explicar:</b>
+            <span>O que é a Sēn.</span>
+            <span>Quando você continuaria sem assinatura.</span>
+            <span>Quando você escolheria Core.</span>
+            <span>Se a IA pareceu realmente útil.</span>
           </div>
-          <Link className="test-secondary" href="/">Back to prototype</Link>
+          <Link className="test-secondary" href="/">Voltar ao protótipo</Link>
         </section>
       </main>
     );
@@ -72,7 +72,7 @@ export default function ExternalTestPage() {
           <div className="test-brand">Sēn</div>
           <span>{step + 1} / {tasks.length}</span>
         </div>
-        <span className="test-kicker">TASK {String(step + 1).padStart(2,'0')}</span>
+        <span className="test-kicker">TAREFA {String(step + 1).padStart(2,'0')}</span>
         <h1>{tasks[step]}</h1>
         <p>
           Do this naturally. Don’t worry about breaking anything.
@@ -80,7 +80,7 @@ export default function ExternalTestPage() {
         </p>
 
         <div className="test-actions">
-          <Link className="test-primary" href="/" target="_blank">Open prototype ↗</Link>
+          <Link className="test-primary" href="/" target="_blank">Abrir protótipo ↗</Link>
           <button
             className="test-secondary"
             onClick={() => {
@@ -88,11 +88,11 @@ export default function ExternalTestPage() {
               else setStep((s) => s + 1);
             }}
           >
-            {step === tasks.length - 1 ? 'Finish test' : 'I’m done with this task →'}
+            {step === tasks.length - 1 ? 'Finalizar teste' : 'Terminei esta tarefa →'}
           </button>
         </div>
 
-        {step > 0 && <button className="test-back" onClick={() => setStep((s)=>s-1)}>← Previous task</button>}
+        {step > 0 && <button className="test-back" onClick={() => setStep((s)=>s-1)}>← Tarefa anterior</button>}
       </section>
     </main>
   );
