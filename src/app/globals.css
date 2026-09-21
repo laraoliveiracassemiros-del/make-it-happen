@@ -1331,3 +1331,33 @@ button:active { transform: scale(.985); }
   transform:translateY(-1px);
   box-shadow:0 18px 48px rgba(47,34,26,.075);
 }
+
+/* Sēn Research Ops */
+.research-console{min-height:100vh;display:grid;grid-template-columns:230px 1fr;background:#eee8de;color:#261d18}
+.research-sidebar{min-height:100vh;padding:28px 22px;background:#332820;color:#f7efe6;display:flex;flex-direction:column}
+.research-brand{font-family:Georgia,serif;font-size:38px;letter-spacing:-.06em}
+.research-sidebar>span{font-size:8px;letter-spacing:.14em;text-transform:uppercase;opacity:.55}
+.research-sidebar nav{display:grid;gap:5px;margin-top:48px}
+.research-sidebar nav button,.research-sidebar nav a{text-align:left;padding:10px 11px;border-radius:11px;color:rgba(247,239,230,.58);background:transparent;font-size:10px;text-decoration:none}
+.research-sidebar nav .active{background:rgba(255,255,255,.08);color:#fff}
+.research-sidebar p{margin-top:auto;color:rgba(247,239,230,.45);font-size:9px;line-height:1.55}
+.research-main{padding:40px clamp(22px,4vw,58px) 70px}
+.research-header{display:flex;justify-content:space-between;gap:30px;align-items:flex-start}
+.research-header span,.evidence-cards span,.research-table-head span,.research-decision>span{font-size:8px;letter-spacing:.15em;font-weight:900;color:#7b7f62}
+.research-header h1{font-family:Georgia,serif;font-size:clamp(42px,6vw,76px);font-weight:500;letter-spacing:-.055em;margin:8px 0 12px}
+.research-header p{max-width:650px;color:#756a61;font-size:11px;line-height:1.6}
+.research-counter{padding:14px 18px;border-radius:18px;background:rgba(255,255,255,.45);border:1px solid rgba(64,45,35,.1)}
+.research-counter small,.research-counter strong{display:block}.research-counter small{font-size:8px;color:#756a61}.research-counter strong{font-family:Georgia,serif;font-size:28px;font-weight:500;margin-top:5px}
+.research-track{display:inline-flex;gap:5px;margin:30px 0 16px;padding:5px;border-radius:999px;border:1px solid rgba(64,45,35,.12)}
+.research-track button{padding:9px 13px;border-radius:999px;color:#756a61;background:transparent;font-size:10px}.research-track button.active{background:#402d23;color:white}
+.evidence-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.evidence-cards article{padding:18px;border-radius:20px;background:rgba(255,255,255,.45);border:1px solid rgba(64,45,35,.09)}
+.evidence-cards strong{display:block;font-family:Georgia,serif;font-size:20px;font-weight:500;margin:18px 0 7px}.evidence-cards p{margin:0;color:#756a61;font-size:9px}
+.research-table-card{margin-top:28px;padding:22px;border-radius:24px;background:rgba(255,255,255,.48);border:1px solid rgba(64,45,35,.1)}
+.research-table-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px}.research-table-head h2{font-family:Georgia,serif;font-size:28px;font-weight:500;margin:6px 0 0}.research-table-head em{font-size:8px;color:#8d8177;font-style:normal}
+.research-row{display:grid;grid-template-columns:55px 1.1fr 1.3fr 1fr;gap:12px;align-items:center;padding:13px 0;border-top:1px solid rgba(64,45,35,.08)}
+.research-row small{display:block;font-size:7px;color:#8d8177;text-transform:uppercase;letter-spacing:.08em}.research-row b,.research-row strong,.research-row span{font-size:10px}.research-row strong{font-weight:700}.research-row span{color:#756a61}
+.status-pill{padding:7px 9px;border-radius:999px;background:#e3d8c9;color:#402d23;font-size:8px}
+.research-decision{margin-top:18px;padding:28px;border-radius:24px;background:#403229;color:#f8efe4}
+.research-decision>span{color:#d0bea7}.research-decision h2{max-width:780px;font-family:Georgia,serif;font-size:34px;font-weight:500;letter-spacing:-.04em;margin:9px 0}.research-decision p{max-width:680px;margin:0;color:rgba(248,239,228,.6);font-size:10px;line-height:1.55}
+@media(max-width:900px){.research-console{grid-template-columns:1fr}.research-sidebar{display:none}.evidence-cards{grid-template-columns:1fr}.research-row{grid-template-columns:45px 1fr}.research-row>div:nth-child(3),.research-row>div:nth-child(4){grid-column:2}.research-header{display:block}.research-counter{margin-top:15px;width:max-content}}
