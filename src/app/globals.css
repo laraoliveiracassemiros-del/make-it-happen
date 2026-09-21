@@ -1272,3 +1272,62 @@ button:active { transform: scale(.985); }
 .pack-vs-core span { font-size:7px; letter-spacing:.13em; font-weight:900; color:#d6c5ad; }
 .pack-vs-core strong { display:block; margin:7px 0; font-family:Georgia,serif; font-size:17px; font-weight:500; }
 .pack-vs-core p { margin:0; font-size:9px; line-height:1.5; color:rgba(248,239,228,.64); }
+
+
+/* Sēn V5 final product-state polish */
+.account-state {
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  margin:-8px 0 24px; padding:8px 10px 8px 12px; border-radius:999px;
+  background:rgba(255,255,255,.45); border:1px solid rgba(64,45,35,.08);
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+}
+.account-state span { font-size:7px; letter-spacing:.13em; font-weight:900; color:var(--olive); }
+.account-state b { font-size:8px; color:var(--muted); font-weight:600; }
+.wallet-state { margin-bottom:22px; }
+
+.free-economics-card {
+  width:100%; margin:16px 0 4px; padding:15px 16px; border-radius:20px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  text-align:left; color:var(--espresso);
+  background:
+    radial-gradient(circle at 95% 0%,rgba(123,127,98,.13),transparent 40%),
+    rgba(255,250,242,.7);
+  border:1px solid rgba(64,45,35,.09);
+}
+.free-economics-card span,.free-economics-card strong,.free-economics-card em { display:block; }
+.free-economics-card span { font-size:7px; letter-spacing:.12em; font-weight:900; color:var(--olive); }
+.free-economics-card strong { margin:6px 0 4px; font-size:11px; }
+.free-economics-card em { font-size:8px; font-style:normal; color:var(--muted); line-height:1.4; }
+.free-economics-card > b { width:31px; height:31px; border-radius:50%; display:grid; place-items:center; background:rgba(227,216,201,.7); flex:0 0 auto; }
+
+.price-legend {
+  display:flex; gap:12px; flex-wrap:wrap; margin:13px 0 2px; color:var(--muted); font-size:7px;
+}
+.price-legend span { display:flex; align-items:center; gap:4px; }
+.dot { width:6px; height:6px; border-radius:50%; display:inline-block; }
+.dot.free { background:#b79874; }
+.dot.member { background:#7b7f62; }
+.dot.included { background:#402d23; }
+
+.membership-compare {
+  margin:20px 0 16px; overflow:hidden; border-radius:18px;
+  border:1px solid var(--line); background:rgba(255,250,242,.7);
+}
+.membership-compare > div {
+  display:grid; grid-template-columns:1.2fr repeat(4,.8fr);
+  align-items:center; gap:5px; padding:9px 10px; border-top:1px solid rgba(64,45,35,.07);
+}
+.membership-compare .compare-head { border-top:0; background:rgba(230,219,204,.5); }
+.membership-compare .compare-head span { font-size:6px; font-weight:900; letter-spacing:.08em; color:var(--olive); text-align:center; }
+.membership-compare .compare-head::before { content:''; }
+.membership-compare b { font-size:7px; font-weight:700; }
+.membership-compare div:not(.compare-head) span { font-size:6.5px; color:var(--muted); text-align:center; line-height:1.25; }
+.keep-free { margin-top:7px; }
+
+.partner-card,.booking-card,.privilege-card,.compact-card,.free-economics-card,.membership-nudge,.pack-card,.earned-offer {
+  transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.partner-card:hover,.booking-card:hover,.privilege-card:hover,.compact-card:hover,.free-economics-card:hover,.membership-nudge:hover,.pack-card:hover {
+  transform:translateY(-1px);
+  box-shadow:0 18px 48px rgba(47,34,26,.075);
+}
