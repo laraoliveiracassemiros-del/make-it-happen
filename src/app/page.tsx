@@ -346,66 +346,66 @@ function Carteira({ open, hasMembership, memberPlan }: { open: (view: View) => v
         <b>{hasMembership ? 'Incluído access + privileges unlocked' : 'Pay-per-use + wallet credits + packs'}</b>
       </div>
       <section className="hero-copy">
-        <p>{hasMembership ? 'Your membership,' : 'Your Sēn account,'}</p>
-        <h1>{hasMembership ? 'working for you.' : 'already learning your life.'}</h1>
+        <p>{hasMembership ? 'Sua assinatura,' : 'Seu uso,'}</p>
+        <h1>{hasMembership ? 'trabalhando por você.' : 'sem conta escondida.'}</h1>
       </section>
 
       <div className={hasMembership ? "wallet-hero" : "wallet-hero free-wallet"}>
-        <small>{hasMembership ? 'This month' : 'Based on your activity'}</small>
+        <small>{hasMembership ? 'Neste mês' : 'Pelo seu uso'}</small>
         <strong>{hasMembership ? 'R$ 612' : 'R$ 286'}</strong>
-        <span>{hasMembership ? 'value used' : 'potential monthly savings with Core'}</span>
+        <span>{hasMembership ? 'em valor usado' : 'em experiências'}</span>
         <div className="wallet-meta">
-          <span>{hasMembership ? `${memberPlan} plan` : 'No membership yet'}</span>
-          <span>{hasMembership ? (memberPlan === 'Core' ? 'R$ 399 / month' : memberPlan === 'Black' ? 'R$ 1.299 / month' : 'R$ 799 / month') : 'Use Sēn free'}</span>
+          <span>{hasMembership ? `${memberPlan} plan` : 'Sem assinatura'}</span>
+          <span>{hasMembership ? (memberPlan === 'Core' ? 'R$ 399 / month' : memberPlan === 'Black' ? 'R$ 1.299 / month' : 'R$ 799 / month') : 'Use a Sēn sem mensalidade'}</span>
         </div>
       </div>
 
       {!hasMembership && (
         <>
           <div className="wallet-credit-card">
-            <div><span>SĒN WALLET</span><strong>R$ 32</strong><em>available credit</em></div>
-            <button>Use on next booking</button>
+            <div><span>SĒN WALLET</span><strong>R$ 32</strong><em>de saldo disponível</em></div>
+            <button>Usar na próxima reserva</button>
           </div>
 
           <button className="pack-card" onClick={() => open('packs')}>
             <span>FLEX PACK</span>
-            <strong>Not ready for Core?</strong>
-            <em>Buy 3, 5 or 10 eligible studio passes without subscribing →</em>
+            <strong>Quer usar mais sem assinar?</strong>
+            <em>Compre 3, 5 ou 10 experiências elegíveis →</em>
           </button>
 
           <div className="savings-meter">
             <div className="meter-head">
-              <span>THIS MONTH</span><b>R$ 286 spent</b>
+              <span>NESTE MÊS</span><b>R$ 286 usados</b>
             </div>
             <div className="meter-track"><i style={{width:'72%'}} /></div>
-            <p>At around 5 eligible studio visits, Core usually becomes the stronger deal.</p>
+            <p>Por volta de 5 experiências elegíveis, Core costuma começar a valer mais.</p>
           </div>
 
           <button className="membership-nudge" onClick={() => open('membership')}>
-            <span>BASED ON YOUR USE</span>
-            <strong>You’re getting close to Core territory.</strong>
-            <em>See the exact comparison →</em>
+            <span>PELO SEU USO</span>
+            <strong>Você está chegando ao ponto em que Core começa a fazer sentido.</strong>
+            <em>Ver comparação →</em>
           </button>
 
           <button className="earned-offer" onClick={() => open('membership')}>
-            <span>YOUR CURRENT OFFER</span>
-            <strong>7% off your first 3 months of Core</strong>
-            <em>Active-use campaign · terms visible before purchase</em>
+            <span>OFERTA ATUAL</span>
+            <strong>7% de desconto nos 3 primeiros meses de Core</strong>
+            <em>Campanha ativa · regras visíveis antes da compra</em>
           </button>
         </>
       )}
 
-      <SectionLabel>{hasMembership ? 'Your privileges' : 'Member-only preview'}</SectionLabel>
+      <SectionLabel>{hasMembership ? 'Seus privilégios' : 'Prévia de benefícios'}</SectionLabel>
       <button className="surface privilege-card" onClick={() => hasMembership ? open('privilege') : open('membership')}>
         <div>
-          <Badge>{hasMembership ? '1 available' : 'Core benefit'}</Badge>
-          <strong>Recovery massage</strong>
-          <span>50 min · expires Sep 30</span>
+          <Badge>{hasMembership ? '1 disponível' : 'Benefício Core'}</Badge>
+          <strong>Massagem de recuperação</strong>
+          <span>50 min · expira em 30 set</span>
         </div>
         <span className="arrow dark">→</span>
       </button>
 
-      <SectionLabel>Recent</SectionLabel>
+      <SectionLabel>Recentes</SectionLabel>
       <div className="transaction-list">
         <div><span>Ativa Reformer</span><b>{hasMembership ? 'Incluído' : 'R$ 78'}</b></div>
         <div><span>Tennis · Preço Sēn</span><b>{hasMembership ? 'R$ 34' : 'R$ 49'}</b></div>
@@ -413,9 +413,9 @@ function Carteira({ open, hasMembership, memberPlan }: { open: (view: View) => v
       </div>
 
       <button className="upgrade-card" onClick={() => open(hasMembership ? 'upgrade' : 'membership')}>
-        <span>{hasMembership ? 'PLUS → BLACK' : 'MEMBERSHIP, WHEN IT EARNS IT'}</span>
-        <strong>{hasMembership ? 'See what would actually change for you' : 'Sēn stays useful before you subscribe.'}</strong>
-        <em>{hasMembership ? 'Not just more features. More access.' : 'Upgrade when the savings and access become obvious.'}</em>
+        <span>{hasMembership ? 'PLUS → BLACK' : 'ASSINATURA, QUANDO FIZER SENTIDO'}</span>
+        <strong>{hasMembership ? 'See what would actually change for you' : 'A Sēn continua útil sem assinatura.'}</strong>
+        <em>{hasMembership ? 'Not just more features. More access.' : 'Assine quando o uso e o acesso justificarem.'}</em>
       </button>
     </div>
   );
@@ -434,8 +434,8 @@ function PartnerView({ close, open, hasMembership }: { close: () => void; open: 
         <h1>Ativa Reformer</h1>
         <p className="muted-line">Sudoeste · Reformer Pilates · 4.9</p>
 
-        <SectionLabel>Why Sēn picked this</SectionLabel>
-        <p className="body-copy">{hasMembership ? "Fits your evening, 11 min away, and this slot is included in your plan." : "Fits your evening and is 11 min away. You can book it now for R$ 78 — or Core would include eligible visits like this."}</p>
+        <SectionLabel>Por que a Sēn escolheu isso</SectionLabel>
+        <p className="body-copy">{hasMembership ? "Encaixa no seu fim de tarde, fica a 11 min e está incluído no seu plano." : "Encaixa no seu fim de tarde e fica a 11 min. Você pode reservar agora por R$ 78; Core incluiria experiências elegíveis como esta."}</p>
 
         <SectionLabel>Amanhã</SectionLabel>
         <div className="time-row">
@@ -444,14 +444,14 @@ function PartnerView({ close, open, hasMembership }: { close: () => void; open: 
           ))}
         </div>
 
-        <SectionLabel>What to know</SectionLabel>
+        <SectionLabel>Antes de ir</SectionLabel>
         <div className="rules">
-          <div><span>Free cancellation</span><b>until 06:30 tomorrow</b></div>
-          <div><span>Arrival</span><b>10 minutes early</b></div>
-          <div><span>Bring</span><b>grip socks</b></div>
+          <div><span>Cancelamento sem custo</span><b>until 06:30 tomorrow</b></div>
+          <div><span>Chegue</span><b>10 minutes early</b></div>
+          <div><span>Leve</span><b>grip socks</b></div>
         </div>
 
-        <button className="primary" onClick={() => open('booking')}>Reserve {time}</button>
+        <button className="primary" onClick={() => open('booking')}>Reservar {time}</button>
       </div>
     </Overlay>
   );
@@ -462,8 +462,8 @@ function BookingView({ close, open, hasMembership }: { close: () => void; open: 
     <Overlay close={close}>
       <div className="overlay-body top-spaced">
         <button className="back light" onClick={close}>←</button>
-        <small className="eyebrow">Confirm</small>
-        <h1>Almost yours.</h1>
+        <small className="eyebrow">Confirmar</small>
+        <h1>Quase pronto.</h1>
 
         <div className="surface summary-card">
           <Badge>{hasMembership ? 'Incluído' : 'Acesso avulso'}</Badge>
@@ -473,41 +473,41 @@ function BookingView({ close, open, hasMembership }: { close: () => void; open: 
         </div>
 
         <div className="summary-lines">
-          <div><span>Your cost today</span><b>{hasMembership ? 'R$ 0' : 'R$ 78'}</b></div>
-          <div><span>{hasMembership ? 'Plan impact' : 'Membership option'}</span><b>{hasMembership ? '1 studio visit' : 'Core · from R$ 399'}</b></div>
-          <div><span>Free cancellation until</span><b>06:30 tomorrow</b></div>
+          <div><span>Seu valor hoje</span><b>{hasMembership ? 'R$ 0' : 'R$ 78'}</b></div>
+          <div><span>{hasMembership ? 'Impacto no plano' : 'Opção de assinatura'}</span><b>{hasMembership ? '1 studio visit' : 'Core · from R$ 399'}</b></div>
+          <div><span>Cancelamento sem custo until</span><b>06:30 tomorrow</b></div>
         </div>
         <p className="fine-print">{hasMembership ? "Late cancel or no-show consumes this studio visit." : "Late cancellation follows the partner policy shown above."}</p>
 
-        <button className="primary" onClick={() => open('confirmed')}>Confirm reservation</button>
-        <p className="center-note">Nothing is booked until you confirm.</p>
+        <button className="primary" onClick={() => open('confirmed')}>Confirmar reservation</button>
+        <p className="center-note">Nada é reservado antes da sua confirmação.</p>
       </div>
     </Overlay>
   );
 }
 
-function ConfirmedView({ close, open, hasMembership }: { close: () => void; open: (view: View) => void; hasMembership: boolean }) {
+function ConfirmaredView({ close, open, hasMembership }: { close: () => void; open: (view: View) => void; hasMembership: boolean }) {
   return (
     <Overlay close={close}>
       <div className="overlay-body top-spaced">
         <button className="back light" onClick={close}>←</button>
-        <small className="eyebrow">Booked</small>
-        <h1>You’re in.</h1>
+        <small className="eyebrow">Reserva confirmada</small>
+        <h1>Pronto.</h1>
         <p className="muted-line">Amanhã · 18:30 · Ativa Reformer</p>
 
         <div className="ticket">
           <strong>18:30</strong>
-          <small>ARRIVE BY 18:20</small>
+          <small>CHEGUE ÀS 18:20</small>
           <span>{hasMembership ? "Incluído · 1 studio visit" : "Paid · R$ 78"}</span>
-          <button>Add to calendar</button>
+          <button>Adicionar ao calendário</button>
         </div>
 
         <div className="two-actions">
-          <button><b>Directions</b><span>11 min</span></button>
-          <button><b>Invite someone</b><span>Share details</span></button>
+          <button><b>Como chegar</b><span>11 min</span></button>
+          <button><b>Convidar alguém</b><span>Compartilhar</span></button>
         </div>
 
-        <button className="secondary" onClick={() => open('recovery')}>Simulate partner cancellation</button>
+        <button className="secondary" onClick={() => open('recovery')}>Simular cancelamento do parceiro</button>
         <button className="primary pale" onClick={close}>Back to Início</button>
       </div>
     </Overlay>
@@ -518,14 +518,14 @@ function RecoveryView({ close, hasMembership }: { close: () => void; hasMembersh
   return (
     <Overlay close={close}>
       <div className="overlay-body top-spaced">
-        <small className="eyebrow">We fixed the important part first</small>
-        <h1>Your booking was cancelled by the partner.</h1>
+        <small className="eyebrow">A gente resolveu o essencial primeiro</small>
+        <h1>O parceiro cancelou sua reserva.</h1>
         <div className="resolution-card">
-          <div><span>{hasMembership ? 'Studio visit' : 'Booking payment'}</span><b>{hasMembership ? 'Restored' : 'Refunded'}</b></div>
-          <div><span>Amount returned</span><b>{hasMembership ? 'R$ 0' : 'R$ 78'}</b></div>
-          <div><span>Your fault?</span><b>No</b></div>
+          <div><span>{hasMembership ? 'Visita' : 'Pagamento'}</span><b>{hasMembership ? 'Restaurada' : 'Estornado'}</b></div>
+          <div><span>Valor devolvido</span><b>{hasMembership ? 'R$ 0' : 'R$ 78'}</b></div>
+          <div><span>Foi culpa sua?</span><b>No</b></div>
         </div>
-        <SectionLabel>Closest alternatives</SectionLabel>
+        <SectionLabel>Alternativas próximas</SectionLabel>
         <button className="surface alt-card">
           <div><strong>Aera Studio · 19:00</strong><span>Asa Sul · Preço de membro R$ 24</span></div><span>→</span>
         </button>
@@ -543,16 +543,16 @@ function PrivilegeView({ close }: { close: () => void }) {
     <Overlay close={close}>
       <div className="overlay-body top-spaced">
         <button className="back light" onClick={close}>←</button>
-        <Badge>Available</Badge>
-        <h1>Recovery massage</h1>
-        <p className="muted-line">50 minutes · one use</p>
+        <Badge>Disponível</Badge>
+        <h1>Massagem de recuperação</h1>
+        <p className="muted-line">50 minutes · um uso</p>
         <div className="surface detail-card">
-          <div><span>Reference value</span><b>R$ 240</b></div>
-          <div><span>Your cost</span><b>R$ 0</b></div>
+          <div><span>Valor de referência</span><b>R$ 240</b></div>
+          <div><span>Seu valor</span><b>R$ 0</b></div>
           <div><span>Expires</span><b>Sep 30</b></div>
         </div>
         <p className="body-copy">Curated monthly value, not a coupon. Availability is controlled so the partner can keep a premium experience.</p>
-        <button className="primary">Find available times</button>
+        <button className="primary">Ver horários disponíveis</button>
       </div>
     </Overlay>
   );
@@ -564,23 +564,23 @@ function SquadView({ close }: { close: () => void }) {
     <Overlay close={close}>
       <div className="overlay-body top-spaced">
         <button className="back light" onClick={close}>←</button>
-        <Badge>Beginner</Badge>
+        <Badge>Iniciante</Badge>
         <h1>Padel tomorrow.</h1>
         <p className="muted-line">10:30 · Lago Sul</p>
 
         <div className="surface squad-detail">
           <strong>{joined ? '4 / 4 people' : '3 / 4 people'}</strong>
-          <span>Beginner-friendly · casual</span>
+          <span>Iniciante-friendly · casual</span>
           <hr />
-          <small>Court booking</small>
-          <b>Not included yet</b>
-          <p>Joining the Squad does not reserve the court.</p>
+          <small>Reserva da quadra</small>
+          <b>Ainda não incluída</b>
+          <p>Entrar no Squad não reserva a quadra.</p>
         </div>
 
         <div className="avatar-row">
           <span>LM</span><span>JP</span><span>AS</span>{joined ? <span>YOU</span> : <i>+1</i>}
         </div>
-        <button className={joined ? 'primary pale' : 'primary'} onClick={() => setJoined(!joined)}>{joined ? 'Joined · Leave Squad' : 'Join Squad'}</button>
+        <button className={joined ? 'primary pale' : 'primary'} onClick={() => setJoined(!joined)}>{joined ? 'Você entrou · sair' : 'Entrar no Squad'}</button>
       </div>
     </Overlay>
   );
@@ -592,15 +592,15 @@ function UpgradeView({ close }: { close: () => void }) {
       <div className="overlay-body top-spaced">
         <button className="back light" onClick={close}>←</button>
         <small className="eyebrow">Plus → Black</small>
-        <h1>More rarity. Not just more usage.</h1>
+        <h1>Mais acesso especial. Não só mais uso.</h1>
         <div className="comparison">
-          <div><span>Studios / week</span><b>4 → 6</b></div>
-          <div><span>Signature access</span><b>1–2 → 3–4 / mo</b></div>
-          <div><span>Privileges</span><b>2 → 3 / mo</b></div>
-          <div><span>Sēn concierge</span><b>More proactive</b></div>
+          <div><span>Studios / semana</span><b>4 → 6</b></div>
+          <div><span>Acesso Signature</span><b>1–2 → 3–4 / mo</b></div>
+          <div><span>Privilégios</span><b>2 → 3 / mo</b></div>
+          <div><span>Sēn concierge</span><b>Mais proativo</b></div>
         </div>
         <div className="black-welcome">
-          <small>BLACK WELCOME</small>
+          <small>BOAS-VINDAS BLACK</small>
           <strong>A curated first-month moment, not a discount code.</strong>
         </div>
         <button className="primary">Continue · R$ 1.299 / month</button>
@@ -626,7 +626,7 @@ function PacksView({ close }: { close: () => void }) {
         <button className="back light" onClick={close}>←</button>
         <small className="eyebrow">Flex Packs</small>
         <h1>More than avulso. Less than a membership.</h1>
-        <p className="muted-line">Use eligible studio visits without a recurring subscription. Packs expire and do not include gym access or monthly Privileges.</p>
+        <p className="muted-line">Use eligible studio visits without a recurring subscription. Packs expire and do not include gym access or monthly Privilégios.</p>
 
         <div className="pack-stack">
           {packs.map((p)=>(
@@ -659,26 +659,26 @@ function MemoryView({ close }: { close: () => void }) {
       <div className="overlay-body top-spaced memory-view">
         <button className="back light" onClick={close}>←</button>
         <small className="eyebrow">O que a Sēn lembra</small>
-        <h1>Your preferences should move with you.</h1>
-        <p className="muted-line">These are editable signals — not permanent labels. Sēn uses them to improve suggestions, not to define you.</p>
+        <h1>Suas preferências podem mudar com você.</h1>
+        <p className="muted-line">São sinais editáveis, não rótulos permanentes. A Sēn usa isso para melhorar sugestões.</p>
 
         <div className="memory-list">
           <button onClick={() => setBoxing(!boxing)} className={boxing ? 'memory-row active' : 'memory-row'}>
-            <div><strong>Boxing</strong><span>Currently relevant</span></div><b>{boxing ? 'On' : 'Off'}</b>
+            <div><strong>Boxing</strong><span>Relevante agora</span></div><b>{boxing ? 'On' : 'Off'}</b>
           </button>
           <button onClick={() => setPilates(!pilates)} className={pilates ? 'memory-row active' : 'memory-row'}>
-            <div><strong>Pilates / Reformer</strong><span>Growing preference</span></div><b>{pilates ? 'On' : 'Off'}</b>
+            <div><strong>Pilates / Reformer</strong><span>Preferência crescente</span></div><b>{pilates ? 'On' : 'Off'}</b>
           </button>
           <button onClick={() => setAfternoon(!afternoon)} className={afternoon ? 'memory-row active' : 'memory-row'}>
-            <div><strong>Afternoon activity</strong><span>Often works for you</span></div><b>{afternoon ? 'On' : 'Off'}</b>
+            <div><strong>Fim de tarde</strong><span>Costuma funcionar bem</span></div><b>{afternoon ? 'On' : 'Off'}</b>
           </button>
         </div>
 
         <div className="memory-note">
-          <span>CONTROL</span>
+          <span>CONTROLE</span>
           <p>You can edit, remove or reset remembered preferences. Sensitive information should never become durable memory silently.</p>
         </div>
-        <button className="primary pale" onClick={close}>Done</button>
+        <button className="primary pale" onClick={close}>Concluir</button>
       </div>
     </Overlay>
   );
@@ -688,8 +688,8 @@ function MembershipView({ close, activate }: { close: () => void; activate: (pla
   const [selected, setSelected] = useState<'Core'|'Plus'|'Black'>('Core');
   const plans = [
     { name: 'Core' as const, price: 'R$ 399', line: 'The everyday membership.', detail: 'Eligible studios ~2×/week · premium gyms · 1 Privilege' },
-    { name: 'Plus' as const, price: 'R$ 799', line: 'More range, more often.', detail: 'Studios ~4×/week · broader premium access · 2 Privileges' },
-    { name: 'Black' as const, price: 'R$ 1.299', line: 'Rarer access, less friction.', detail: 'Studios ~6×/week · Signature access · 3 Privileges' },
+    { name: 'Plus' as const, price: 'R$ 799', line: 'More range, more often.', detail: 'Studios ~4×/week · broader premium access · 2 Privilégios' },
+    { name: 'Black' as const, price: 'R$ 1.299', line: 'Rarer access, less friction.', detail: 'Studios ~6×/week · Acesso Signature · 3 Privilégios' },
   ];
   return (
     <Overlay close={close}>
@@ -700,14 +700,14 @@ function MembershipView({ close, activate }: { close: () => void; activate: (pla
         <p className="muted-line">Membership unlocks better economics, included access and premium privileges. We want you to feel the need before we ask you to subscribe.</p>
         <div className="membership-proof">
           <span>BASED ON YOUR CURRENT PICKS</span>
-          <strong>Your current pattern: R$ 286 spent · ~4 eligible visits</strong>
+          <strong>Your current pattern: R$ 286 usados · ~4 eligible visits</strong>
           <em>At ~5+ eligible visits/month, Core typically becomes more attractive. Prototype estimate.</em>
         </div>
         <div className="membership-compare">
           <div className="compare-head"><span>FREE</span><span>CORE</span><span>PLUS</span><span>BLACK</span></div>
           <div><b>Studio access</b><span>Pay / pack</span><span>~8–9</span><span>~17–18</span><span>~25–26</span></div>
           <div><b>Premium gyms</b><span>—</span><span>Selected</span><span>More</span><span>+ Signature</span></div>
-          <div><b>Privileges</b><span>Preview</span><span>1 / mo</span><span>2 / mo</span><span>3 / mo</span></div>
+          <div><b>Privilégios</b><span>Preview</span><span>1 / mo</span><span>2 / mo</span><span>3 / mo</span></div>
           <div><b>Sēn AI</b><span>Full</span><span>Full</span><span>Full</span><span>+ concierge</span></div>
         </div>
 
@@ -819,7 +819,7 @@ export default function InícioPage() {
         <ul>
           <li>Explorar → booking → recovery</li>
           <li>Natural Sēn AI conversation</li>
-          <li>Carteira & Privileges</li>
+          <li>Carteira & Privilégios</li>
           <li>Círculos & Squads</li>
         </ul>
         <span>Brasília · V1 · 18+</span>
@@ -857,7 +857,7 @@ export default function InícioPage() {
 
       {view === 'partner' && <PartnerView close={() => setView(null)} open={open} hasMembership={hasMembership} />}
       {view === 'booking' && <BookingView close={() => setView(null)} open={open} hasMembership={hasMembership} />}
-      {view === 'confirmed' && <ConfirmedView close={() => setView(null)} open={open} hasMembership={hasMembership} />}
+      {view === 'confirmed' && <ConfirmaredView close={() => setView(null)} open={open} hasMembership={hasMembership} />}
       {view === 'recovery' && <RecoveryView close={() => setView(null)} hasMembership={hasMembership} />}
       {view === 'privilege' && <PrivilegeView close={() => setView(null)} />}
       {view === 'squad' && <SquadView close={() => setView(null)} />}
