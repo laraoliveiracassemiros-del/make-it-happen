@@ -214,7 +214,7 @@ function Explore({ open, hasMembership }: { open: (view: View) => void; hasMembe
   );
 }
 
-function SenAI({ open }: { open: (view: View) => void }) {
+function SenAI({ open, hasMembership }: { open: (view: View) => void; hasMembership: boolean }) {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
     { role: 'sen', text: 'What are you in the mood for?' },
@@ -229,13 +229,13 @@ function SenAI({ open }: { open: (view: View) => void }) {
     let reply = 'Entendi. Me fala só o que pesa mais agora: horário, distância, preço ou tipo de atividade?';
 
     if (v.includes('cans') || v.includes('leve')) {
-      reply = 'Eu iria de algo leve hoje. Tem yoga às 20h a 9 min e reformer às 19:30 a 11 min. Pelo seu histórico, reformer costuma combinar mais com você — mas yoga é mais tranquila. Quer que eu compare?';
+      reply = hasMembership ? 'Eu iria de algo leve hoje. Tem yoga às 20h a 9 min e reformer às 19:30 a 11 min. As duas entram no seu acesso elegível hoje. Pelo seu histórico, reformer costuma combinar mais com você — mas yoga é mais tranquila. Quer que eu compare?' : 'Eu iria de algo leve hoje. Tem yoga às 20h a 9 min por R$42 no Sēn Free e reformer às 19:30 a 11 min por R$78. Pelo seu histórico, reformer costuma combinar mais com você — mas yoga é mais tranquila. Quer que eu compare?';
     } else if (v.includes('barat') || v.includes('gastar') || v.includes('preço') || v.includes('dinheiro')) {
-      reply = 'Então eu cortaria as opções mais caras. Yoga está R$42 no Sēn Free, e você tem R$32 na Wallet. Seu custo final ficaria R$10. Quer que eu abra essa?';
+      reply = hasMembership ? 'Então eu priorizaria o que já está incluído no seu acesso hoje. Yoga e reformer estão elegíveis sem custo adicional nessa simulação. Quer a opção mais perto?' : 'Então eu cortaria as opções mais caras. Yoga está R$42 no Sēn Free, e você tem R$32 na Wallet. Seu custo final ficaria R$10. Quer que eu abra essa?';
     } else if (v.includes('boxe') && (v.includes('enjo') || v.includes('odeio') || v.includes('não gosto'))) {
       reply = 'Faz sentido. Posso reduzir boxe nas suas recomendações e aumentar Pilates/Reformer por enquanto. Isso não é permanente — você pode mudar depois em What Sēn remembers.';
     } else if (v.includes('plano') || v.includes('core') || v.includes('membership')) {
-      reply = 'Pelo seu uso atual, eu ainda ficaria no Free por mais um pouco. Você gastou R$286 em experiências elegíveis este mês; se fizer mais 1–2 visitas parecidas, Core começa a ficar mais interessante. Quer ver a conta exata?';
+      reply = hasMembership ? 'Você já está com membership ativo. Posso comparar o valor que você usou neste mês com o que teria gasto no Free e te dizer se o plano continua fazendo sentido.' : 'Pelo seu uso atual, eu ainda ficaria no Free por mais um pouco. Você gastou R$286 em experiências elegíveis este mês; se fizer mais 1–2 visitas parecidas, Core começa a ficar mais interessante. Quer ver a conta exata?';
     } else if (v.includes('perto') || v.includes('agora')) {
       reply = 'Você está por volta da Asa Sul. Tem boxe às 16:30 a 12 min e yoga às 17:00 a 9 min. Posso filtrar pelo que cabe no seu tempo e orçamento.';
     }
@@ -252,7 +252,7 @@ function SenAI({ open }: { open: (view: View) => void }) {
     setMessages((prev) => [
       ...prev,
       { role: 'user', text: 'Quero fazer alguma coisa hoje depois das 19h, mas tô cansada.' },
-      { role: 'sen', text: 'Eu deixaria hoje mais leve. Yoga às 20h · 9 min de você · Included.' },
+      { role: 'sen', text: hasMembership ? 'Eu deixaria hoje mais leve. Yoga às 20h · 9 min de você · Included.' : 'Eu deixaria hoje mais leve. Yoga às 20h · 9 min de você · R$42 no Sēn Free.' },
     ]);
   }
 
@@ -337,12 +337,12 @@ function Circles({ open }: { open: (view: View) => void }) {
   );
 }
 
-function Wallet({ open, hasMembership }: { open: (view: View) => void; hasMembership: boolean }) {
+function Wallet({ open, hasMembership, memberPlan }: { open: (view: View) => void; hasMembership: boolean; memberPlan: 'Core'|'Plus'|'Black'|null }) {
   return (
     <div className="screen-scroll">
       <AppHeader label="Wallet" />
       <div className="account-state wallet-state">
-        <span>{hasMembership ? 'PLUS ACTIVE' : 'SĒN FREE'}</span>
+        <span>{hasMembership ? `${memberPlan?.toUpperCase()} ACTIVE` : 'SĒN FREE'}</span>
         <b>{hasMembership ? 'Included access + privileges unlocked' : 'Pay-per-use + wallet credits + packs'}</b>
       </div>
       <section className="hero-copy">
@@ -355,8 +355,8 @@ function Wallet({ open, hasMembership }: { open: (view: View) => void; hasMember
         <strong>{hasMembership ? 'R$ 612' : 'R$ 286'}</strong>
         <span>{hasMembership ? 'value used' : 'potential monthly savings with Core'}</span>
         <div className="wallet-meta">
-          <span>{hasMembership ? 'Plus plan' : 'No membership yet'}</span>
-          <span>{hasMembership ? 'R$ 799 / month' : 'Use Sēn free'}</span>
+          <span>{hasMembership ? `${memberPlan} plan` : 'No membership yet'}</span>
+          <span>{hasMembership ? (memberPlan === 'Core' ? 'R$ 399 / month' : memberPlan === 'Black' ? 'R$ 1.299 / month' : 'R$ 799 / month') : 'Use Sēn free'}</span>
         </div>
       </div>
 
@@ -514,15 +514,15 @@ function ConfirmedView({ close, open, hasMembership }: { close: () => void; open
   );
 }
 
-function RecoveryView({ close }: { close: () => void }) {
+function RecoveryView({ close, hasMembership }: { close: () => void; hasMembership: boolean }) {
   return (
     <Overlay close={close}>
       <div className="overlay-body top-spaced">
         <small className="eyebrow">We fixed the important part first</small>
         <h1>Your booking was cancelled by the partner.</h1>
         <div className="resolution-card">
-          <div><span>Studio visit</span><b>Restored</b></div>
-          <div><span>Amount charged</span><b>R$ 0</b></div>
+          <div><span>{hasMembership ? 'Studio visit' : 'Booking payment'}</span><b>{hasMembership ? 'Restored' : 'Refunded'}</b></div>
+          <div><span>Amount returned</span><b>{hasMembership ? 'R$ 0' : 'R$ 78'}</b></div>
           <div><span>Your fault?</span><b>No</b></div>
         </div>
         <SectionLabel>Closest alternatives</SectionLabel>
@@ -684,7 +684,7 @@ function MemoryView({ close }: { close: () => void }) {
   );
 }
 
-function MembershipView({ close, activate }: { close: () => void; activate: () => void }) {
+function MembershipView({ close, activate }: { close: () => void; activate: (plan: 'Core'|'Plus'|'Black') => void }) {
   const [selected, setSelected] = useState<'Core'|'Plus'|'Black'>('Core');
   const plans = [
     { name: 'Core' as const, price: 'R$ 399', line: 'The everyday membership.', detail: 'Eligible studios ~2×/week · premium gyms · 1 Privilege' },
@@ -719,7 +719,7 @@ function MembershipView({ close, activate }: { close: () => void; activate: () =
             </button>
           ))}
         </div>
-        <button className="primary" onClick={activate}>Start {selected} in prototype</button>
+        <button className="primary" onClick={() => activate(selected)}>Start {selected} in prototype</button>
         <button className="quiet-button keep-free" onClick={close}>Keep Sēn Free</button>
       </div>
     </Overlay>
@@ -798,7 +798,8 @@ export default function HomePage() {
   const [tab, setTab] = useState<Tab>('home');
   const [view, setView] = useState<View>(null);
   const [onboarding, setOnboarding] = useState(true);
-  const [hasMembership, setHasMembership] = useState(false);
+  const [memberPlan, setMemberPlan] = useState<'Core'|'Plus'|'Black'|null>(null);
+  const hasMembership = memberPlan !== null;
 
   function changeTab(next: Tab) {
     setView(null);
@@ -831,9 +832,9 @@ export default function HomePage() {
             {onboarding && <Onboarding finish={() => setOnboarding(false)} />}
             {tab === 'home' && <Home setTab={changeTab} open={open} hasMembership={hasMembership} />}
             {tab === 'explore' && <Explore open={open} hasMembership={hasMembership} />}
-            {tab === 'sen' && <SenAI open={open} />}
+            {tab === 'sen' && <SenAI open={open} hasMembership={hasMembership} />}
             {tab === 'circles' && <Circles open={open} />}
-            {tab === 'wallet' && <Wallet open={open} hasMembership={hasMembership} />}
+            {tab === 'wallet' && <Wallet open={open} hasMembership={hasMembership} memberPlan={memberPlan} />}
             <BottomNav active={tab} onChange={changeTab} />
           </div>
           <div className="home-indicator" />
@@ -847,21 +848,21 @@ export default function HomePage() {
         <button onClick={() => { setTab('sen'); setView(null); }}>Talk to Sēn</button>
         <button onClick={() => { setTab('wallet'); setView(null); }}>Open a Privilege</button>
         <button onClick={() => { setTab('circles'); setView('squad'); }}>Join a Squad</button>
-        <button onClick={() => { setView(null); setTab('home'); setOnboarding(true); setHasMembership(false); }}>Replay onboarding</button>
+        <button onClick={() => { setView(null); setTab('home'); setOnboarding(true); setMemberPlan(null); }}>Replay onboarding</button>
         <button onClick={() => setView('packs')}>Preview Flex Packs</button>
         <button onClick={() => setView('membership')}>Preview membership</button>
-        <button onClick={() => { setHasMembership(true); setTab('home'); setView(null); setOnboarding(false); }}>Simulate Plus member</button>
-        <button onClick={() => { setHasMembership(false); setTab('home'); setView(null); setOnboarding(false); }}>Simulate Free user</button>
+        <button onClick={() => { setMemberPlan('Plus'); setTab('home'); setView(null); setOnboarding(false); }}>Simulate Plus member</button>
+        <button onClick={() => { setMemberPlan(null); setTab('home'); setView(null); setOnboarding(false); }}>Simulate Free user</button>
       </aside>
 
       {view === 'partner' && <PartnerView close={() => setView(null)} open={open} hasMembership={hasMembership} />}
       {view === 'booking' && <BookingView close={() => setView(null)} open={open} hasMembership={hasMembership} />}
       {view === 'confirmed' && <ConfirmedView close={() => setView(null)} open={open} hasMembership={hasMembership} />}
-      {view === 'recovery' && <RecoveryView close={() => setView(null)} />}
+      {view === 'recovery' && <RecoveryView close={() => setView(null)} hasMembership={hasMembership} />}
       {view === 'privilege' && <PrivilegeView close={() => setView(null)} />}
       {view === 'squad' && <SquadView close={() => setView(null)} />}
       {view === 'upgrade' && <UpgradeView close={() => setView(null)} />}
-      {view === 'membership' && <MembershipView close={() => setView(null)} activate={() => { setHasMembership(true); setView(null); setTab('wallet'); }} />}
+      {view === 'membership' && <MembershipView close={() => setView(null)} activate={(plan) => { setMemberPlan(plan); setView(null); setTab('wallet'); }} />}
       {view === 'memory' && <MemoryView close={() => setView(null)} />}
       {view === 'packs' && <PacksView close={() => setView(null)} />}
     </main>
