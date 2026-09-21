@@ -224,15 +224,26 @@ function SenAI({ open }: { open: (view: View) => void }) {
     e?.preventDefault();
     const value = input.trim();
     if (!value) return;
+
+    const v = value.toLowerCase();
+    let reply = 'Entendi. Me fala só o que pesa mais agora: horário, distância, preço ou tipo de atividade?';
+
+    if (v.includes('cans') || v.includes('leve')) {
+      reply = 'Eu iria de algo leve hoje. Tem yoga às 20h a 9 min e reformer às 19:30 a 11 min. Pelo seu histórico, reformer costuma combinar mais com você — mas yoga é mais tranquila. Quer que eu compare?';
+    } else if (v.includes('barat') || v.includes('gastar') || v.includes('preço') || v.includes('dinheiro')) {
+      reply = 'Então eu cortaria as opções mais caras. Yoga está R$42 no Sēn Free, e você tem R$32 na Wallet. Seu custo final ficaria R$10. Quer que eu abra essa?';
+    } else if (v.includes('boxe') && (v.includes('enjo') || v.includes('odeio') || v.includes('não gosto'))) {
+      reply = 'Faz sentido. Posso reduzir boxe nas suas recomendações e aumentar Pilates/Reformer por enquanto. Isso não é permanente — você pode mudar depois em What Sēn remembers.';
+    } else if (v.includes('plano') || v.includes('core') || v.includes('membership')) {
+      reply = 'Pelo seu uso atual, eu ainda ficaria no Free por mais um pouco. Você gastou R$286 em experiências elegíveis este mês; se fizer mais 1–2 visitas parecidas, Core começa a ficar mais interessante. Quer ver a conta exata?';
+    } else if (v.includes('perto') || v.includes('agora')) {
+      reply = 'Você está por volta da Asa Sul. Tem boxe às 16:30 a 12 min e yoga às 17:00 a 9 min. Posso filtrar pelo que cabe no seu tempo e orçamento.';
+    }
+
     setMessages((prev) => [
       ...prev,
       { role: 'user', text: value },
-      {
-        role: 'sen',
-        text: value.toLowerCase().includes('cans')
-          ? 'Eu deixaria hoje mais leve. Achei uma yoga às 20h, a 9 min, Included no seu plano.'
-          : 'Entendi. Posso organizar isso pelo seu horário, distância e o que já entra no plano.',
-      },
+      { role: 'sen', text: reply },
     ]);
     setInput('');
   }
@@ -250,8 +261,8 @@ function SenAI({ open }: { open: (view: View) => void }) {
       <div className="screen-scroll sen-scroll">
         <AppHeader label="Sēn" />
         <div className="sen-intro">
-          <h1>Think less about logistics.</h1>
-          <p>Tell me what you need. I’ll work around your real day.</p>
+          <h1>Talk normally.</h1>
+          <p>Messy thoughts, changing plans, questions, decisions — I’ll keep up.</p>
         </div>
 
         <div className="chip-row">
