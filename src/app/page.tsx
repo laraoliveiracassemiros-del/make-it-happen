@@ -25,7 +25,7 @@ const partners = [
     area: 'Sudoeste',
     category: 'Reformer Pilates',
     distance: '11 min',
-    state: 'Included',
+    state: 'Incluído',
     times: ['18:30', '19:30', '20:30'],
   },
   {
@@ -34,7 +34,7 @@ const partners = [
     area: 'Asa Sul',
     category: 'Pilates',
     distance: '13 min',
-    state: 'Member Price',
+    state: 'Preço de membro',
     price: 'R$ 24',
     times: ['19:00', '20:00'],
   },
@@ -46,11 +46,11 @@ function Badge({ children, tone = 'sand' }: { children: React.ReactNode; tone?: 
 
 function BottomNav({ active, onChange }: { active: Tab; onChange: (tab: Tab) => void }) {
   const items: { id: Tab; label: string; icon: string }[] = [
-    { id: 'home', label: 'Home', icon: '⌂' },
-    { id: 'explore', label: 'Explore', icon: '⌕' },
+    { id: 'home', label: 'Início', icon: '⌂' },
+    { id: 'explore', label: 'Explorar', icon: '⌕' },
     { id: 'sen', label: 'Sēn', icon: '✦' },
-    { id: 'circles', label: 'Circles', icon: '◌' },
-    { id: 'wallet', label: 'Wallet', icon: '◇' },
+    { id: 'circles', label: 'Círculos', icon: '◌' },
+    { id: 'wallet', label: 'Carteira', icon: '◇' },
   ];
 
   return (
@@ -78,46 +78,46 @@ function AppHeader({ label }: { label?: string }) {
   );
 }
 
-function Home({ setTab, open, hasMembership }: { setTab: (tab: Tab) => void; open: (view: View) => void; hasMembership: boolean }) {
+function Início({ setTab, open, hasMembership }: { setTab: (tab: Tab) => void; open: (view: View) => void; hasMembership: boolean }) {
   return (
     <div className="screen-scroll">
       <AppHeader />
       <div className="account-state">
-        <span>{hasMembership ? 'PLUS MEMBER' : 'SĒN FREE'}</span>
-        <b>{hasMembership ? 'Your benefits are active' : 'No subscription · pay as you go'}</b>
+        <span>{hasMembership ? 'PLUS ATIVO' : 'CONTA SĒN'}</span>
+        <b>{hasMembership ? 'Seus benefícios estão ativos' : 'Sem mensalidade · pague quando usar'}</b>
       </div>
       <section className="hero-copy">
         <p>Boa tarde.</p>
-        <h1>What would make today feel better?</h1>
+        <h1>Seu dia, com menos atrito.</h1>
       </section>
 
       <button className="ask-sen" onClick={() => setTab('sen')}>
-        <span>Ask Sēn anything…</span>
+        <span>Fale com a Sēn…</span>
         <b>↗</b>
       </button>
 
-      <SectionLabel>Your day</SectionLabel>
+      <SectionLabel>Hoje</SectionLabel>
       <button className="surface booking-card" onClick={() => open(hasMembership ? 'confirmed' : 'partner')}>
         <div className="time-pill">18:30</div>
         <div>
           <strong>Reformer · Ativa</strong>
-          <span>{hasMembership ? 'Sudoeste · Included' : 'Sudoeste · R$ 78 today'}</span>
-          <em>{hasMembership ? 'Leave around 18:08' : 'Core would include this visit'}</em>
+          <span>{hasMembership ? 'Sudoeste · Incluído' : 'Sudoeste · R$ 78 no Sēn'}</span>
+          <em>{hasMembership ? 'Saia por volta de 18:08' : 'Core incluiria esta experiência'}</em>
         </div>
       </button>
 
       {!hasMembership && (
         <div className="free-state-strip">
-          <div><span>SĒN FREE</span><strong>Pay only when you book.</strong></div>
-          <button onClick={() => setTab('wallet')}>Wallet & packs →</button>
+          <div><span>CONTA SĒN</span><strong>Pague só quando reservar.</strong></div>
+          <button onClick={() => setTab('wallet')}>Carteira & packs →</button>
         </div>
       )}
 
-      <SectionLabel>For you today</SectionLabel>
+      <SectionLabel>Para você agora</SectionLabel>
       <button className="editorial-card" onClick={() => setTab('explore')}>
         <div>
-          <Badge tone="dark">{hasMembership ? "Included" : "Open access"}</Badge>
-          <h2>A slower evening.</h2>
+          <Badge tone="dark">{hasMembership ? "Incluído" : "Acesso avulso"}</Badge>
+          <h2>Uma noite mais leve.</h2>
           <p>Yoga · 20:00 · 9 min away</p>
         </div>
         <span className="arrow">↗</span>
@@ -125,32 +125,32 @@ function Home({ setTab, open, hasMembership }: { setTab: (tab: Tab) => void; ope
 
       <div className="value-row">
         <div>
-          <SectionLabel>{hasMembership ? 'Your value' : 'Your Sēn potential'}</SectionLabel>
+          <SectionLabel>{hasMembership ? 'Seu valor' : 'Seu mês'}</SectionLabel>
           <strong className="value-number">{hasMembership ? 'R$ 612' : 'R$ 286'}</strong>
-          <span>{hasMembership ? 'used this month' : 'possible monthly savings based on your picks'}</span>
+          <span>{hasMembership ? 'em valor usado neste mês' : 'em experiências neste mês'}</span>
         </div>
         <button className="text-link" onClick={() => hasMembership ? setTab('wallet') : open('membership')}>
-          {hasMembership ? 'View wallet →' : 'See why Core fits →'}
+          {hasMembership ? 'Ver carteira →' : 'Comparar com Core →'}
         </button>
       </div>
 
       {!hasMembership && (
         <button className="free-economics-card" onClick={() => setTab('wallet')}>
           <div>
-            <span>4 ELIGIBLE VISITS THIS MONTH</span>
-            <strong>R$ 286 spent · R$ 32 wallet credit</strong>
-            <em>One more similar booking and Core starts to compete strongly.</em>
+            <span>4 EXPERIÊNCIAS NESTE MÊS</span>
+            <strong>R$ 286 usados · R$ 32 de saldo</strong>
+            <em>Com mais 1–2 experiências parecidas, Core começa a fazer mais sentido.</em>
           </div>
           <b>→</b>
         </button>
       )}
 
-      <SectionLabel>Happening</SectionLabel>
+      <SectionLabel>Acontecendo</SectionLabel>
       <button className="surface compact-card" onClick={() => open('squad')}>
         <div>
           <Badge tone="olive">Squad</Badge>
-          <strong>Beginner padel</strong>
-          <span>Tomorrow · 10:30 · 2 spots left</span>
+          <strong>Padel iniciante</strong>
+          <span>Amanhã · 10:30 · 2 vagas</span>
         </div>
         <span className="arrow dark">→</span>
       </button>
@@ -162,13 +162,13 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return <div className="section-label">{children}</div>;
 }
 
-function Explore({ open, hasMembership }: { open: (view: View) => void; hasMembership: boolean }) {
+function Explorar({ open, hasMembership }: { open: (view: View) => void; hasMembership: boolean }) {
   const [query, setQuery] = useState('reformer amanhã depois das 18h');
   const filtered = useMemo(() => partners.filter((p) => p.name.toLowerCase().includes(query.toLowerCase().split(' ')[0]) || query.includes('reformer')), [query]);
 
   return (
     <div className="screen-scroll">
-      <AppHeader label="Explore" />
+      <AppHeader label="Explorar" />
       <div className="searchbox">
         <span>⌕</span>
         <input value={query} onChange={(e) => setQuery(e.target.value)} />
@@ -182,13 +182,13 @@ function Explore({ open, hasMembership }: { open: (view: View) => void; hasMembe
 
       {!hasMembership && (
         <div className="price-legend">
-          <span><i className="dot free" /> Sēn Price</span>
-          <span><i className="dot member" /> Member Price</span>
-          <span><i className="dot included" /> Included with plan</span>
+          <span><i className="dot free" /> Preço Sēn</span>
+          <span><i className="dot member" /> Preço de membro</span>
+          <span><i className="dot included" /> Incluído with plan</span>
         </div>
       )}
 
-      <SectionLabel>Best matches</SectionLabel>
+      <SectionLabel>Melhores opções</SectionLabel>
 
       {filtered.map((partner, index) => (
         <button key={partner.id} className="partner-card" onClick={() => open('partner')}>
@@ -196,19 +196,19 @@ function Explore({ open, hasMembership }: { open: (view: View) => void; hasMembe
             <span>{index === 0 ? 'R' : 'A'}</span>
           </div>
           <div className="partner-copy">
-            <Badge>{hasMembership ? partner.state : 'Sēn Price'}</Badge>
+            <Badge>{hasMembership ? partner.state : 'Preço Sēn'}</Badge>
             <strong>{partner.name}</strong>
             <span>{partner.area} · {partner.distance}</span>
-            <em>{partner.times.join('   ')} · {hasMembership ? (partner.price || 'Included') : (index === 0 ? 'R$ 78' : 'R$ 64')}</em>
-            {!hasMembership && <small className="retail-compare">{index === 0 ? 'Public R$ 90' : 'Public R$ 75'}</small>}
+            <em>{partner.times.join('   ')} · {hasMembership ? (partner.price || 'Incluído') : (index === 0 ? 'R$ 78' : 'R$ 64')}</em>
+            {!hasMembership && <small className="retail-compare">{index === 0 ? 'Local R$ 90' : 'Local R$ 75'}</small>}
           </div>
         </button>
       ))}
 
       <div className="collection-card">
         <small>SĒN EDIT</small>
-        <h3>After-work, without the rush.</h3>
-        <p>Five places with genuinely calm 19h–21h availability.</p>
+        <h3>Fim de tarde sem pressa.</h3>
+        <p>Uma seleção tranquila para depois das 19h.</p>
       </div>
     </div>
   );
@@ -231,9 +231,9 @@ function SenAI({ open, hasMembership }: { open: (view: View) => void; hasMembers
     if (v.includes('cans') || v.includes('leve')) {
       reply = hasMembership ? 'Eu iria de algo leve hoje. Tem yoga às 20h a 9 min e reformer às 19:30 a 11 min. As duas entram no seu acesso elegível hoje. Pelo seu histórico, reformer costuma combinar mais com você — mas yoga é mais tranquila. Quer que eu compare?' : 'Eu iria de algo leve hoje. Tem yoga às 20h a 9 min por R$42 no Sēn Free e reformer às 19:30 a 11 min por R$78. Pelo seu histórico, reformer costuma combinar mais com você — mas yoga é mais tranquila. Quer que eu compare?';
     } else if (v.includes('barat') || v.includes('gastar') || v.includes('preço') || v.includes('dinheiro')) {
-      reply = hasMembership ? 'Então eu priorizaria o que já está incluído no seu acesso hoje. Yoga e reformer estão elegíveis sem custo adicional nessa simulação. Quer a opção mais perto?' : 'Então eu cortaria as opções mais caras. Yoga está R$42 no Sēn Free, e você tem R$32 na Wallet. Seu custo final ficaria R$10. Quer que eu abra essa?';
+      reply = hasMembership ? 'Então eu priorizaria o que já está incluído no seu acesso hoje. Yoga e reformer estão elegíveis sem custo adicional nessa simulação. Quer a opção mais perto?' : 'Então eu cortaria as opções mais caras. Yoga está R$42 no Sēn Free, e você tem R$32 na Carteira. Seu custo final ficaria R$10. Quer que eu abra essa?';
     } else if (v.includes('boxe') && (v.includes('enjo') || v.includes('odeio') || v.includes('não gosto'))) {
-      reply = 'Faz sentido. Posso reduzir boxe nas suas recomendações e aumentar Pilates/Reformer por enquanto. Isso não é permanente — você pode mudar depois em What Sēn remembers.';
+      reply = 'Faz sentido. Posso reduzir boxe nas suas recomendações e aumentar Pilates/Reformer por enquanto. Isso não é permanente — você pode mudar depois em O que a Sēn lembra.';
     } else if (v.includes('plano') || v.includes('core') || v.includes('membership')) {
       reply = hasMembership ? 'Você já está com membership ativo. Posso comparar o valor que você usou neste mês com o que teria gasto no Free e te dizer se o plano continua fazendo sentido.' : 'Pelo seu uso atual, eu ainda ficaria no Free por mais um pouco. Você gastou R$286 em experiências elegíveis este mês; se fizer mais 1–2 visitas parecidas, Core começa a ficar mais interessante. Quer ver a conta exata?';
     } else if (v.includes('perto') || v.includes('agora')) {
@@ -252,7 +252,7 @@ function SenAI({ open, hasMembership }: { open: (view: View) => void; hasMembers
     setMessages((prev) => [
       ...prev,
       { role: 'user', text: 'Quero fazer alguma coisa hoje depois das 19h, mas tô cansada.' },
-      { role: 'sen', text: hasMembership ? 'Eu deixaria hoje mais leve. Yoga às 20h · 9 min de você · Included.' : 'Eu deixaria hoje mais leve. Yoga às 20h · 9 min de você · R$42 no Sēn Free.' },
+      { role: 'sen', text: hasMembership ? 'Eu deixaria hoje mais leve. Yoga às 20h · 9 min de você · Incluído.' : 'Eu deixaria hoje mais leve. Yoga às 20h · 9 min de você · R$42 no Sēn Free.' },
     ]);
   }
 
@@ -261,21 +261,21 @@ function SenAI({ open, hasMembership }: { open: (view: View) => void; hasMembers
       <div className="screen-scroll sen-scroll">
         <AppHeader label="Sēn" />
         <div className="sen-intro">
-          <h1>Talk normally.</h1>
-          <p>Messy thoughts, changing plans, questions, decisions — I’ll keep up.</p>
+          <h1>Pode falar do seu jeito.</h1>
+          <p>Horário, preço, distância, vontade e mudança de ideia — eu acompanho.</p>
         </div>
 
         <div className="chip-row">
-          <button className="chip" onClick={() => setMessages((p) => [...p, { role: 'sen', text: 'Me manda sua semana do jeito que estiver na cabeça. Eu organizo antes de salvar qualquer coisa.' }])}>Plan my week</button>
-          <button className="chip" onClick={quickFind}>Find something now</button>
-          <button className="chip" onClick={() => open('memory')}>What Sēn remembers</button>
+          <button className="chip" onClick={() => setMessages((p) => [...p, { role: 'sen', text: 'Me manda sua semana do jeito que estiver na cabeça. Eu organizo antes de salvar qualquer coisa.' }])}>Organizar minha semana</button>
+          <button className="chip" onClick={quickFind}>Encontrar algo agora</button>
+          <button className="chip" onClick={() => open('memory')}>O que a Sēn lembra</button>
         </div>
 
         <button className="proactive-card" onClick={() => open('partner')}>
-          <span>NEAR YOU · OPTIONAL</span>
-          <strong>Boxing at 16:30</strong>
-          <p>You’re around Asa Sul. This starts in 50 min and fits your usual afternoon window.</p>
-          <em>Why this suggestion →</em>
+          <span>PERTO DE VOCÊ · OPCIONAL</span>
+          <strong>Boxe às 16:30</strong>
+          <p>Você está por volta da Asa Sul. Começa em 50 min e combina com seu fim de tarde.</p>
+          <em>Por que essa sugestão? →</em>
         </button>
 
         <div className="chat">
@@ -283,7 +283,7 @@ function SenAI({ open, hasMembership }: { open: (view: View) => void; hasMembers
             <div key={index} className={message.role === 'user' ? 'message user-message' : 'message sen-message'}>
               {message.text}
               {message.role === 'sen' && index === messages.length - 1 && messages.length > 2 ? (
-                <button className="inline-action" onClick={() => open('partner')}>View best option →</button>
+                <button className="inline-action" onClick={() => open('partner')}>Ver melhor opção →</button>
               ) : null}
             </div>
           ))}
@@ -291,45 +291,45 @@ function SenAI({ open, hasMembership }: { open: (view: View) => void; hasMembers
       </div>
 
       <form className="composer" onSubmit={send}>
-        <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Message Sēn…" />
+        <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Mensagem para Sēn…" />
         <button type="submit">↗</button>
       </form>
     </div>
   );
 }
 
-function Circles({ open }: { open: (view: View) => void }) {
+function Círculos({ open }: { open: (view: View) => void }) {
   return (
     <div className="screen-scroll">
-      <AppHeader label="Circles" />
+      <AppHeader label="Círculos" />
       <section className="hero-copy">
-        <p>Community, minus the performance.</p>
-        <h1>Do more things with people.</h1>
+        <p>Menos feed. Mais vida real.</p>
+        <h1>Faça mais coisas com gente de verdade.</h1>
       </section>
 
-      <SectionLabel>Your circles</SectionLabel>
+      <SectionLabel>Seus círculos</SectionLabel>
       <div className="surface circle-card">
         <div className="circle-icon">R</div>
         <div>
-          <strong>Running Brasília</strong>
+          <strong>Corrida Brasília</strong>
           <span>Saturday · 8:00 · Parque da Cidade</span>
-          <Badge tone="olive">12 going</Badge>
+          <Badge tone="olive">12 indo</Badge>
         </div>
       </div>
 
-      <SectionLabel>Happening near you</SectionLabel>
+      <SectionLabel>Acontecendo near you</SectionLabel>
       <button className="editorial-card padel" onClick={() => open('squad')}>
         <div>
           <Badge tone="dark">Squad</Badge>
-          <h2>Beginner padel</h2>
-          <p>Tomorrow · 10:30 · Lago Sul · 2 spots left</p>
+          <h2>Padel iniciante</h2>
+          <p>Amanhã · 10:30 · Lago Sul · 2 vagas</p>
         </div>
         <span className="arrow">↗</span>
       </button>
 
-      <SectionLabel>Discover</SectionLabel>
+      <SectionLabel>Descobrir</SectionLabel>
       <div className="discover-grid">
-        {['Reformer', 'Boxing', 'Yoga', 'Study sessions'].map((item) => (
+        {['Reformer', 'Boxing', 'Yoga', 'Sessões de estudo'].map((item) => (
           <div className="discover-tile" key={item}>{item}</div>
         ))}
       </div>
@@ -337,13 +337,13 @@ function Circles({ open }: { open: (view: View) => void }) {
   );
 }
 
-function Wallet({ open, hasMembership, memberPlan }: { open: (view: View) => void; hasMembership: boolean; memberPlan: 'Core'|'Plus'|'Black'|null }) {
+function Carteira({ open, hasMembership, memberPlan }: { open: (view: View) => void; hasMembership: boolean; memberPlan: 'Core'|'Plus'|'Black'|null }) {
   return (
     <div className="screen-scroll">
-      <AppHeader label="Wallet" />
+      <AppHeader label="Carteira" />
       <div className="account-state wallet-state">
-        <span>{hasMembership ? `${memberPlan?.toUpperCase()} ACTIVE` : 'SĒN FREE'}</span>
-        <b>{hasMembership ? 'Included access + privileges unlocked' : 'Pay-per-use + wallet credits + packs'}</b>
+        <span>{hasMembership ? `${memberPlan?.toUpperCase()} ACTIVE` : 'CONTA SĒN'}</span>
+        <b>{hasMembership ? 'Incluído access + privileges unlocked' : 'Pay-per-use + wallet credits + packs'}</b>
       </div>
       <section className="hero-copy">
         <p>{hasMembership ? 'Your membership,' : 'Your Sēn account,'}</p>
@@ -407,9 +407,9 @@ function Wallet({ open, hasMembership, memberPlan }: { open: (view: View) => voi
 
       <SectionLabel>Recent</SectionLabel>
       <div className="transaction-list">
-        <div><span>Ativa Reformer</span><b>{hasMembership ? 'Included' : 'R$ 78'}</b></div>
-        <div><span>Tennis · Sēn Price</span><b>{hasMembership ? 'R$ 34' : 'R$ 49'}</b></div>
-        <div><span>Wallet credit earned</span><b>+R$ 12</b></div>
+        <div><span>Ativa Reformer</span><b>{hasMembership ? 'Incluído' : 'R$ 78'}</b></div>
+        <div><span>Tennis · Preço Sēn</span><b>{hasMembership ? 'R$ 34' : 'R$ 49'}</b></div>
+        <div><span>Carteira credit earned</span><b>+R$ 12</b></div>
       </div>
 
       <button className="upgrade-card" onClick={() => open(hasMembership ? 'upgrade' : 'membership')}>
@@ -427,7 +427,7 @@ function PartnerView({ close, open, hasMembership }: { close: () => void; open: 
     <Overlay close={close}>
       <div className="partner-hero">
         <button className="back" onClick={close}>←</button>
-        <Badge tone="dark">{hasMembership ? "Included" : "Open access"}</Badge>
+        <Badge tone="dark">{hasMembership ? "Incluído" : "Acesso avulso"}</Badge>
         <div className="partner-monogram">R</div>
       </div>
       <div className="overlay-body">
@@ -437,7 +437,7 @@ function PartnerView({ close, open, hasMembership }: { close: () => void; open: 
         <SectionLabel>Why Sēn picked this</SectionLabel>
         <p className="body-copy">{hasMembership ? "Fits your evening, 11 min away, and this slot is included in your plan." : "Fits your evening and is 11 min away. You can book it now for R$ 78 — or Core would include eligible visits like this."}</p>
 
-        <SectionLabel>Tomorrow</SectionLabel>
+        <SectionLabel>Amanhã</SectionLabel>
         <div className="time-row">
           {['18:30', '19:30', '20:30'].map((item) => (
             <button key={item} onClick={() => setTime(item)} className={time === item ? 'time-option active' : 'time-option'}>{item}</button>
@@ -466,9 +466,9 @@ function BookingView({ close, open, hasMembership }: { close: () => void; open: 
         <h1>Almost yours.</h1>
 
         <div className="surface summary-card">
-          <Badge>{hasMembership ? 'Included' : 'Open access'}</Badge>
+          <Badge>{hasMembership ? 'Incluído' : 'Acesso avulso'}</Badge>
           <strong>Ativa Reformer</strong>
-          <span>Tomorrow · 18:30–19:20</span>
+          <span>Amanhã · 18:30–19:20</span>
           <span>Sudoeste</span>
         </div>
 
@@ -493,12 +493,12 @@ function ConfirmedView({ close, open, hasMembership }: { close: () => void; open
         <button className="back light" onClick={close}>←</button>
         <small className="eyebrow">Booked</small>
         <h1>You’re in.</h1>
-        <p className="muted-line">Tomorrow · 18:30 · Ativa Reformer</p>
+        <p className="muted-line">Amanhã · 18:30 · Ativa Reformer</p>
 
         <div className="ticket">
           <strong>18:30</strong>
           <small>ARRIVE BY 18:20</small>
-          <span>{hasMembership ? "Included · 1 studio visit" : "Paid · R$ 78"}</span>
+          <span>{hasMembership ? "Incluído · 1 studio visit" : "Paid · R$ 78"}</span>
           <button>Add to calendar</button>
         </div>
 
@@ -508,7 +508,7 @@ function ConfirmedView({ close, open, hasMembership }: { close: () => void; open
         </div>
 
         <button className="secondary" onClick={() => open('recovery')}>Simulate partner cancellation</button>
-        <button className="primary pale" onClick={close}>Back to Home</button>
+        <button className="primary pale" onClick={close}>Back to Início</button>
       </div>
     </Overlay>
   );
@@ -527,12 +527,12 @@ function RecoveryView({ close, hasMembership }: { close: () => void; hasMembersh
         </div>
         <SectionLabel>Closest alternatives</SectionLabel>
         <button className="surface alt-card">
-          <div><strong>Aera Studio · 19:00</strong><span>Asa Sul · Member Price R$ 24</span></div><span>→</span>
+          <div><strong>Aera Studio · 19:00</strong><span>Asa Sul · Preço de membro R$ 24</span></div><span>→</span>
         </button>
         <button className="surface alt-card">
-          <div><strong>Studio Alma · 20:00</strong><span>Asa Sul · Included</span></div><span>→</span>
+          <div><strong>Studio Alma · 20:00</strong><span>Asa Sul · Incluído</span></div><span>→</span>
         </button>
-        <button className="primary" onClick={close}>Back to Home</button>
+        <button className="primary" onClick={close}>Back to Início</button>
       </div>
     </Overlay>
   );
@@ -658,7 +658,7 @@ function MemoryView({ close }: { close: () => void }) {
     <Overlay close={close}>
       <div className="overlay-body top-spaced memory-view">
         <button className="back light" onClick={close}>←</button>
-        <small className="eyebrow">What Sēn remembers</small>
+        <small className="eyebrow">O que a Sēn lembra</small>
         <h1>Your preferences should move with you.</h1>
         <p className="muted-line">These are editable signals — not permanent labels. Sēn uses them to improve suggestions, not to define you.</p>
 
@@ -794,7 +794,7 @@ function Overlay({ children, close }: { children: React.ReactNode; close: () => 
   );
 }
 
-export default function HomePage() {
+export default function InícioPage() {
   const [tab, setTab] = useState<Tab>('home');
   const [view, setView] = useState<View>(null);
   const [onboarding, setOnboarding] = useState(true);
@@ -817,10 +817,10 @@ export default function HomePage() {
         <p>Clickable MVP prototype</p>
         <h2>Access + AI + Community + Value.</h2>
         <ul>
-          <li>Explore → booking → recovery</li>
+          <li>Explorar → booking → recovery</li>
           <li>Natural Sēn AI conversation</li>
-          <li>Wallet & Privileges</li>
-          <li>Circles & Squads</li>
+          <li>Carteira & Privileges</li>
+          <li>Círculos & Squads</li>
         </ul>
         <span>Brasília · V1 · 18+</span>
       </aside>
@@ -830,11 +830,11 @@ export default function HomePage() {
           <div className="statusbar"><span>13:10</span><span>● ● ◒</span></div>
           <div className="app">
             {onboarding && <Onboarding finish={() => setOnboarding(false)} />}
-            {tab === 'home' && <Home setTab={changeTab} open={open} hasMembership={hasMembership} />}
-            {tab === 'explore' && <Explore open={open} hasMembership={hasMembership} />}
+            {tab === 'home' && <Início setTab={changeTab} open={open} hasMembership={hasMembership} />}
+            {tab === 'explore' && <Explorar open={open} hasMembership={hasMembership} />}
             {tab === 'sen' && <SenAI open={open} hasMembership={hasMembership} />}
-            {tab === 'circles' && <Circles open={open} />}
-            {tab === 'wallet' && <Wallet open={open} hasMembership={hasMembership} memberPlan={memberPlan} />}
+            {tab === 'circles' && <Círculos open={open} />}
+            {tab === 'wallet' && <Carteira open={open} hasMembership={hasMembership} memberPlan={memberPlan} />}
             <BottomNav active={tab} onChange={changeTab} />
           </div>
           <div className="home-indicator" />
